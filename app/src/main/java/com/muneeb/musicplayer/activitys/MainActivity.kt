@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 val idC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID))
                 val albumC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
                 val artistC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
-                val durationC = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+                val durationC = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
                 val pathC = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
                 val albumIdC =
                     cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
