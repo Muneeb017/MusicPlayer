@@ -8,6 +8,17 @@
     android:layout_marginTop="80dp"
     android:background="@color/cool_pink">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Muneeb Khalid"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="90dp"
@@ -15,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_music_player_round"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"

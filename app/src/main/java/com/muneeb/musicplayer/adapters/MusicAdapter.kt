@@ -31,16 +31,23 @@ class MusicAdapter(private val context: Context, private val musicList: ArrayLis
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
+
         holder.title.text = musicList[position].title
+
         holder.album.text = musicList[position].album
+
         holder.duration.text = formatDuration(musicList[position].duration)
+
         Glide.with(context).load(musicList[position].artUri)
-            .apply(RequestOptions().placeholder(R.color.black).centerCrop())
-            .into(holder.image)
+            .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(holder.image)
+
         holder.root.setOnClickListener {
             val intent = Intent(context, PlayerActivity::class.java)
+            intent.putExtra("index", position)
+            intent.putExtra("class", "MusicAdapter")
             ContextCompat.startActivity(context, intent, null)
         }
+
     }
 
     override fun getItemCount(): Int {

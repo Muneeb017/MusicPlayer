@@ -42,17 +42,16 @@
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivSongs"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_music_player"
-        app:shapeAppearanceOverlay="@style/curved"
-        app:strokeColor="@color/cool_blue"
-        app:strokeWidth="5dp" />
+        app:shapeAppearanceOverlay="@style/curved" />
 
     <TextView
-        android:id="@+id/tvSong"
+        android:id="@+id/tvSongsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -66,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
+
         android:orientation="horizontal"
         android:padding="5dp">
 
