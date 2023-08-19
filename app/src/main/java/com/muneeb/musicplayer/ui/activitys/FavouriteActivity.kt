@@ -1,4 +1,4 @@
-package com.muneeb.musicplayer.activitys
+package com.muneeb.musicplayer.ui.activitys
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

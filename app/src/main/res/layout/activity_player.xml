@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activitys.PlayerActivity">
+    tools:context=".ui.activitys.PlayerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,14 +65,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="15dp">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnSongPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             app:icon="@drawable/ic_previous"
             app:iconSize="30dp" />
 
@@ -80,8 +80,10 @@
             android:id="@+id/btnSongPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="40dp"
             android:backgroundTint="@android:color/holo_red_light"
+            app:elevation="0dp"
             app:icon="@drawable/ic_pause"
             app:iconSize="40dp"
             app:iconTint="@color/white"
@@ -91,7 +93,9 @@
             android:id="@+id/btnSongNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:elevation="0dp"
             app:icon="@drawable/ic_next"
+            android:layout_margin="8dp"
             app:iconSize="40dp" />
 
     </LinearLayout>

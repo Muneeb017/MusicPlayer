@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicplayer.R
-import com.muneeb.musicplayer.activitys.PlayerActivity
+import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.databinding.ItemMusicBinding
