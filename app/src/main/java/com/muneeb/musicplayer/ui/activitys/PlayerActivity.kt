@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicplayer.R
@@ -18,7 +19,7 @@ import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.databinding.ActivityPlayerBinding
 import com.muneeb.musicplayer.service.MusicService
 
-class PlayerActivity : AppCompatActivity(), ServiceConnection {
+class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCompletionListener {
 
     companion object {
         lateinit var musicListPA: ArrayList<Music>
@@ -28,6 +29,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
 
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
+        var repeat: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,12 +72,23 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
 
         })
 
+        binding.ivRepeat.setOnClickListener {
+            if (!repeat){
+                repeat = true
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
+            }else{
+                repeat = false
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this,R.color.cool_pink))
+            }
+        }
+
     }
 
     private fun setLayout() {
         Glide.with(this).load(musicListPA[songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(binding.ivSongs)
         binding.tvSongsName.text = musicListPA[songPosition].title
+        if (repeat) binding.ivRepeat.setColorFilter(ContextCompat.getColor(this,R.color.purple_500))
     }
 
     private fun createMediaPlayer() {
@@ -88,10 +101,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
             isPlaying = true
             binding.btnSongPause.setIconResource(R.drawable.ic_pause)
             musicService!!.showNotification(R.drawable.ic_pause)
-            binding.tvTimeStart.text = formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
+            binding.tvTimeStart.text =
+                formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
             binding.tvTimeEnd.text = formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
             binding.seekbar.progress = 0
             binding.seekbar.max = musicService!!.mediaPlayer!!.duration
+            musicService!!.mediaPlayer!!.setOnCompletionListener(this)
         } catch (e: Exception) {
             return
         }
@@ -145,10 +160,21 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         val binder = service as MusicService.MyBinder
         musicService = binder.currentService()
         createMediaPlayer()
+        musicService!!.seekBarSetup()
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         musicService = null
+    }
+
+    override fun onCompletion(mp: MediaPlayer?) {
+        setSongPosition(increment = true)
+        createMediaPlayer()
+        try {
+            setLayout()
+        } catch (e: Exception) {
+            return
+        }
     }
 
 }
