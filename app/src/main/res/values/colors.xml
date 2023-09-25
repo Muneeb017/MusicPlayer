@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!-- custom colors -->
+    <color name="blue">#277BC0</color>
     <color name="cool_blue">#0091ea</color>
     <color name="cool_green">#64dd17</color>
     <color name="cool_pink">#f50057</color>

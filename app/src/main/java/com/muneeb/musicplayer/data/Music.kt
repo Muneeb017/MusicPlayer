@@ -3,6 +3,7 @@ package com.muneeb.musicplayer.data
 import android.media.MediaMetadataRetriever
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 import java.util.concurrent.TimeUnit
+import kotlin.system.exitProcess
 
 data class Music(
     val id: String,
@@ -42,3 +43,12 @@ fun setSongPosition(increment: Boolean) {
         }
     }
 }
+fun exitApplication(){
+    if (PlayerActivity.musicService != null){
+        PlayerActivity.musicService!!.stopForeground(true)
+        PlayerActivity.musicService!!.mediaPlayer!!.release()
+        PlayerActivity.musicService = null}
+    exitProcess(1)
+}
+
+

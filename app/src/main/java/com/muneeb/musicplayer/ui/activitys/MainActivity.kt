@@ -6,24 +6,25 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.MusicAdapter
 import com.muneeb.musicplayer.data.Music
+import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.databinding.ActivityMainBinding
 import java.io.File
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var MusicListMA: ArrayList<Music>
+        lateinit var musicListSearch: ArrayList<Music>
+        var search: Boolean = false
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -71,11 +74,7 @@ class MainActivity : AppCompatActivity() {
                     val builder = MaterialAlertDialogBuilder(this)
                     builder.setTitle("Exit").setMessage("Do you want to close app?")
                         .setPositiveButton("Yes") { _, _ ->
-                            if (PlayerActivity.musicService != null){
-                            PlayerActivity.musicService!!.stopForeground(true)
-                            PlayerActivity.musicService!!.mediaPlayer!!.release()
-                            PlayerActivity.musicService = null}
-                            exitProcess(1)
+                            exitApplication()
                         }.setNegativeButton("No") { dialog, _ ->
                             dialog.dismiss()
                         }
@@ -139,6 +138,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("SetTextI18n")
     private fun initializeLayout() {
+        search = false
         MusicListMA = getAllAudio()
         binding.rcvSongs.setHasFixedSize(true)
         binding.rcvSongs.setItemViewCacheSize(15)
@@ -206,11 +206,33 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (!PlayerActivity.isPlaying && PlayerActivity.musicService != null) {
-            PlayerActivity.musicService!!.stopForeground(true)
-            PlayerActivity.musicService!!.mediaPlayer!!.release()
-            PlayerActivity.musicService = null
-            exitProcess(1)
+            exitApplication()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.search_view_menu, menu)
+        val searchView = menu?.findItem(R.id.searchView)?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                musicListSearch = ArrayList()
+                if (newText != null) {
+                    val userInput = newText.lowercase()
+                    for (song in MusicListMA) if (song.title.lowercase()
+                            .contains(userInput)
+                    ) musicListSearch.add(song)
+                    search = true
+                    musicAdapter.updateMusicList(searchList = musicListSearch)
+                }
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
 }

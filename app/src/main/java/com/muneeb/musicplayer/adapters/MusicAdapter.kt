@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicplayer.R
-import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.databinding.ItemMusicBinding
+import com.muneeb.musicplayer.ui.activitys.MainActivity
+import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
-class MusicAdapter(private val context: Context, private val musicList: ArrayList<Music>) :
+class MusicAdapter(private val context: Context, private var musicList: ArrayList<Music>) :
     RecyclerView.Adapter<MusicAdapter.MyHolder>() {
     class MyHolder(binding: ItemMusicBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -42,16 +43,29 @@ class MusicAdapter(private val context: Context, private val musicList: ArrayLis
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(holder.image)
 
         holder.root.setOnClickListener {
-            val intent = Intent(context, PlayerActivity::class.java)
-            intent.putExtra("index", position)
-            intent.putExtra("class", "MusicAdapter")
-            ContextCompat.startActivity(context, intent, null)
+            when {
+                MainActivity.search -> sendIntent(ref = "MusicAdapter", pos = position)
+                else -> sendIntent(ref = "MusicAdapter", pos = position)
+            }
         }
 
     }
 
     override fun getItemCount(): Int {
         return musicList.size
+    }
+
+    fun updateMusicList(searchList: ArrayList<Music>) {
+        musicList = ArrayList()
+        musicList.addAll(searchList)
+        notifyDataSetChanged()
+    }
+
+    private fun sendIntent(ref: String, pos: Int) {
+        val intent = Intent(context, PlayerActivity::class.java)
+        intent.putExtra("index", pos)
+        intent.putExtra("class", ref)
+        ContextCompat.startActivity(context, intent, null)
     }
 
 }

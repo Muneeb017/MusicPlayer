@@ -7,9 +7,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicplayer.ApplicationClass
 import com.muneeb.musicplayer.R
+import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
-import kotlin.system.exitProcess
 
 class NotificationReceiver : BroadcastReceiver() {
 
@@ -23,10 +23,7 @@ class NotificationReceiver : BroadcastReceiver() {
             ApplicationClass.NEXT -> prevNextSong(increment = true, context = context!!)
 
             ApplicationClass.EXIT -> {
-                PlayerActivity.musicService!!.stopForeground(true)
-                PlayerActivity.musicService!!.mediaPlayer!!.release()
-                PlayerActivity.musicService = null
-                exitProcess(1)
+                exitApplication()
             }
         }
     }
