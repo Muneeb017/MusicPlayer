@@ -1,6 +1,7 @@
 package com.muneeb.musicplayer.data
 
 import android.media.MediaMetadataRetriever
+import com.muneeb.musicplayer.ui.activitys.FavouriteActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
@@ -31,24 +32,37 @@ fun getImgArt(path: String): ByteArray? {
 }
 
 fun setSongPosition(increment: Boolean) {
-    if (!PlayerActivity.repeat){
+    if (!PlayerActivity.repeat) {
         if (increment) {
-            if (PlayerActivity.musicListPA.size - 1 == PlayerActivity.songPosition)
-                PlayerActivity.songPosition = 0
+            if (PlayerActivity.musicListPA.size - 1 == PlayerActivity.songPosition) PlayerActivity.songPosition =
+                0
             else ++PlayerActivity.songPosition
         } else {
-            if (0 == PlayerActivity.songPosition)
-                PlayerActivity.songPosition = PlayerActivity.musicListPA.size - 1
+            if (0 == PlayerActivity.songPosition) PlayerActivity.songPosition =
+                PlayerActivity.musicListPA.size - 1
             else --PlayerActivity.songPosition
         }
     }
 }
-fun exitApplication(){
-    if (PlayerActivity.musicService != null){
+
+fun exitApplication() {
+    if (PlayerActivity.musicService != null) {
         PlayerActivity.musicService!!.stopForeground(true)
         PlayerActivity.musicService!!.mediaPlayer!!.release()
-        PlayerActivity.musicService = null}
+        PlayerActivity.musicService = null
+    }
     exitProcess(1)
+}
+
+fun favouriteChecker(id: String): Int {
+    PlayerActivity.isFavourite = false
+    FavouriteActivity.favouriteSongs.forEachIndexed { index, music ->
+        if (id == music.id) {
+            PlayerActivity.isFavourite = true
+            return index
+        }
+    }
+    return -1
 }
 
 

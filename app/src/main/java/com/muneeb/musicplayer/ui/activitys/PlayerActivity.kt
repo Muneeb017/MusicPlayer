@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.exitApplication
+import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.databinding.ActivityPlayerBinding
@@ -39,9 +40,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
         var repeat: Boolean = false
-        var min15:Boolean = false
-        var min30:Boolean = false
-        var min60:Boolean = false
+        var min15: Boolean = false
+        var min30: Boolean = false
+        var min60: Boolean = false
+        var nowPlayingId: String = ""
+        var isFavourite: Boolean = false
+        var fIndex: Int = -1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +54,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val intent = Intent(this, MusicService::class.java)
-        bindService(intent, this, BIND_AUTO_CREATE)
-        startService(intent)
 
         initializeLayout()
 
@@ -113,18 +113,20 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
         binding.ivTimer.setOnClickListener {
             val timer = min15 || min30 || min60
-            if(!timer) showBottomSheetDialog()
+            if (!timer) showBottomSheetDialog()
             else {
                 val builder = MaterialAlertDialogBuilder(this)
-                builder.setTitle("Stop Timer")
-                    .setMessage("Do you want to stop timer?")
-                    .setPositiveButton("Yes"){ _, _ ->
+                builder.setTitle("Stop Timer").setMessage("Do you want to stop timer?")
+                    .setPositiveButton("Yes") { _, _ ->
                         min15 = false
                         min30 = false
                         min60 = false
-                        binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
-                    }
-                    .setNegativeButton("No"){dialog, _ ->
+                        binding.ivTimer.setColorFilter(
+                            ContextCompat.getColor(
+                                this, R.color.cool_pink
+                            )
+                        )
+                    }.setNegativeButton("No") { dialog, _ ->
                         dialog.dismiss()
                     }
                 val customDialog = builder.create()
@@ -141,19 +143,30 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
         }
 
+        binding.ivHeart.setOnClickListener {
+            if (isFavourite){
+                isFavourite = false
+                binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
+                FavouriteActivity.favouriteSongs.removeAt(fIndex)
+            }
+            else {
+                isFavourite = true
+                binding.ivHeart.setImageResource(R.drawable.ic_favorite)
+                FavouriteActivity.favouriteSongs.add(musicListPA[songPosition])
+            }
+        }
+
     }
 
     private fun setLayout() {
+        fIndex = favouriteChecker(musicListPA[songPosition].id)
         Glide.with(this).load(musicListPA[songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(binding.ivSongs)
         binding.tvSongsName.text = musicListPA[songPosition].title
-        if (repeat) binding.ivRepeat.setColorFilter(
-            ContextCompat.getColor(
-                this, R.color.purple_500
-            )
-        )
+        if (repeat) binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
         if (min15 || min30 || min60) binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
-
+        if (isFavourite) binding.ivHeart.setImageResource(R.drawable.ic_favorite)
+        else binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
     }
 
     private fun createMediaPlayer() {
@@ -172,6 +185,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             binding.seekbar.progress = 0
             binding.seekbar.max = musicService!!.mediaPlayer!!.duration
             musicService!!.mediaPlayer!!.setOnCompletionListener(this)
+            nowPlayingId = musicListPA[songPosition].id
         } catch (e: Exception) {
             return
         }
@@ -180,13 +194,31 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun initializeLayout() {
         songPosition = intent.getIntExtra("index", 0)
         when (intent.getStringExtra("class")) {
+            "NowPlaying" -> {
+                setLayout()
+                binding.tvTimeStart.text =
+                    formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
+                binding.tvTimeEnd.text =
+                    formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
+                binding.seekbar.progress = musicService!!.mediaPlayer!!.currentPosition
+                binding.seekbar.max = musicService!!.mediaPlayer!!.duration
+                if (isPlaying) binding.btnSongPause.setIconResource(R.drawable.ic_pause)
+                else binding.btnSongPause.setIconResource(R.drawable.ic_play)
+            }
+
             "MusicAdapterSearch" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
                 musicListPA = ArrayList()
                 musicListPA.addAll(MainActivity.musicListSearch)
                 setLayout()
             }
 
             "MusicAdapter" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
                 musicListPA = ArrayList()
                 musicListPA.addAll(MainActivity.MusicListMA)
                 setLayout()
@@ -194,6 +226,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             }
 
             "MainActivity" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
                 musicListPA = ArrayList()
                 musicListPA.addAll(MainActivity.MusicListMA)
                 musicListPA.shuffle()
@@ -262,29 +297,36 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         dialog.show()
 
         dialog.findViewById<LinearLayout>(R.id.min_15)?.setOnClickListener {
-            Toast.makeText(baseContext,  "Music will stop after 15 minutes", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "Music will stop after 15 minutes", Toast.LENGTH_SHORT)
+                .show()
             binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min15 = true
-            Thread{Thread.sleep((15 * 60000).toLong())
-                if(min15) exitApplication()}.start()
+            Thread {
+                Thread.sleep((15 * 60000).toLong())
+                if (min15) exitApplication()
+            }.start()
             dialog.dismiss()
         }
 
         dialog.findViewById<LinearLayout>(R.id.min_30)?.setOnClickListener {
-            Toast.makeText(this,"Music will stop after 30 minutes",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Music will stop after 30 minutes", Toast.LENGTH_SHORT).show()
             binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min30 = true
-            Thread{Thread.sleep((30 * 60000).toLong())
-                if(min30) exitApplication()}.start()
+            Thread {
+                Thread.sleep((30 * 60000).toLong())
+                if (min30) exitApplication()
+            }.start()
             dialog.dismiss()
         }
 
         dialog.findViewById<LinearLayout>(R.id.min_60)?.setOnClickListener {
-            Toast.makeText(this,"Music will stop after 60 minutes",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Music will stop after 60 minutes", Toast.LENGTH_SHORT).show()
             binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min60 = true
-            Thread{Thread.sleep((60 * 60000).toLong())
-                if(min60) exitApplication()}.start()
+            Thread {
+                Thread.sleep((60 * 60000).toLong())
+                if (min60) exitApplication()
+            }.start()
             dialog.dismiss()
         }
     }

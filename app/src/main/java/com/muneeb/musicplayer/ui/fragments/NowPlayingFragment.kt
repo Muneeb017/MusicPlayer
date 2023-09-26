@@ -42,7 +42,6 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
             PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
             playMusic()
         }
-
         binding.root.setOnClickListener {
             val intent = Intent(requireContext(), PlayerActivity::class.java)
             intent.putExtra("index", PlayerActivity.songPosition)
