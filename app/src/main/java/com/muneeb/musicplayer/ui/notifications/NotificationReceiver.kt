@@ -9,6 +9,7 @@ import com.muneeb.musicplayer.ApplicationClass
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.setSongPosition
+import com.muneeb.musicplayer.ui.fragments.NowPlayingFragment
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
 class NotificationReceiver : BroadcastReceiver() {
@@ -33,6 +34,7 @@ class NotificationReceiver : BroadcastReceiver() {
         PlayerActivity.musicService!!.mediaPlayer!!.start()
         PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
         PlayerActivity.binding.btnSongPause.setIconResource(R.drawable.ic_pause)
+        NowPlayingFragment.binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
     }
 
     private fun pauseMusic() {
@@ -40,16 +42,25 @@ class NotificationReceiver : BroadcastReceiver() {
         PlayerActivity.musicService!!.mediaPlayer!!.pause()
         PlayerActivity.musicService!!.showNotification(R.drawable.ic_play)
         PlayerActivity.binding.btnSongPause.setIconResource(R.drawable.ic_play)
+        NowPlayingFragment.binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
     }
 
     private fun prevNextSong(increment: Boolean, context: Context) {
+
         setSongPosition(increment = increment)
         PlayerActivity.musicService!!.createMediaPlayer()
+
         Glide.with(context).load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop())
             .into(PlayerActivity.binding.ivSongs)
-        PlayerActivity.binding.tvSongsName.text =
-            PlayerActivity.musicListPA[PlayerActivity.songPosition].title
+        PlayerActivity.binding.tvSongsName.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
+
+        Glide.with(context)
+            .load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
+            .apply(RequestOptions().placeholder(R.color.black).centerCrop())
+            .into(NowPlayingFragment.binding.songImgNP)
+        NowPlayingFragment.binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
+
         playMusic()
     }
 

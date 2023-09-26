@@ -1,4 +1,4 @@
-package com.muneeb.musicplayer.fragments
+package com.muneeb.musicplayer.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.databinding.FragmentNowPlayingBinding
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
-class NowPlayingFragment : Fragment() {
+class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -23,24 +23,26 @@ class NowPlayingFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
         binding = FragmentNowPlayingBinding.bind(view)
         binding.root.visibility = View.INVISIBLE
-        binding.playBtnNp.setOnClickListener {
+        binding.playPauseBtnNp.setOnClickListener {
             if (PlayerActivity.isPlaying) pauseMusic() else playMusic()
         }
         binding.nextBtnNp.setOnClickListener {
             setSongPosition(increment = true)
             PlayerActivity.musicService!!.createMediaPlayer()
-            Glide.with(requireContext())
+            Glide.with(this)
                 .load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
-                .apply(RequestOptions().placeholder(R.drawable.ic_music_player).centerCrop())
+                .apply(RequestOptions().placeholder(R.color.black).centerCrop())
                 .into(binding.songImgNP)
             binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
             PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
             playMusic()
         }
+
         binding.root.setOnClickListener {
             val intent = Intent(requireContext(), PlayerActivity::class.java)
             intent.putExtra("index", PlayerActivity.songPosition)
@@ -60,23 +62,25 @@ class NowPlayingFragment : Fragment() {
                 .apply(RequestOptions().placeholder(R.drawable.ic_music_player).centerCrop())
                 .into(binding.songImgNP)
             binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
-            if (PlayerActivity.isPlaying) binding.playBtnNp.setIconResource(R.drawable.ic_pause)
-            else binding.playBtnNp.setIconResource(R.drawable.ic_play)
+            if (PlayerActivity.isPlaying) binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
+            else binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
         }
     }
 
     private fun playMusic() {
         PlayerActivity.isPlaying = true
         PlayerActivity.musicService!!.mediaPlayer!!.start()
-        binding.playBtnNp.setIconResource(R.drawable.ic_pause)
+        binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
         PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
+        PlayerActivity.binding.btnSongNext.setIconResource(R.drawable.ic_pause)
     }
 
     private fun pauseMusic() {
         PlayerActivity.isPlaying = false
         PlayerActivity.musicService!!.mediaPlayer!!.pause()
-        binding.playBtnNp.setIconResource(R.drawable.ic_play)
+        binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
         PlayerActivity.musicService!!.showNotification(R.drawable.ic_play)
+        PlayerActivity.binding.btnSongNext.setIconResource(R.drawable.ic_play)
     }
 
 }

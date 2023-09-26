@@ -93,7 +93,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nowPlaying"
-            android:name="com.muneeb.musicplayer.fragments.NowPlayingFragment"
+            android:name="com.muneeb.musicplayer.ui.fragments.NowPlayingFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_sheet"
-    tools:context=".fragments.NowPlayingFragment">
+    tools:context=".ui.fragments.NowPlayingFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/songImgNP"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/playBtnNp"
+        android:id="@+id/playPauseBtnNp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -50,13 +50,17 @@
         android:id="@+id/songsNameNP"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
+        android:ellipsize="marquee"
         android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:layout_marginHorizontal="10dp"
         android:text="@string/song_name"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playBtnNp"
+        app:layout_constraintEnd_toStartOf="@+id/playPauseBtnNp"
         app:layout_constraintStart_toEndOf="@+id/songImgNP"
         app:layout_constraintTop_toTopOf="parent" />
 
