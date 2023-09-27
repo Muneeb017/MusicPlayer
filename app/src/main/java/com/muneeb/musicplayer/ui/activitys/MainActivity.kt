@@ -19,6 +19,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.MusicAdapter
 import com.muneeb.musicplayer.data.Music
@@ -42,27 +44,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.coolPinkNav)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open, R.string.close)
         binding.root.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if (requestRuntimePermission()) initializeLayout()
+        if (requestRuntimePermission()) {
+            initializeLayout()
+            //for retrieving favourites data using shared perferences
+            FavouriteActivity.favouriteSongs = ArrayList()
+            val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE)
+            val jsonString = editor.getString("FavouriteSongs", null)
+            val typeToken = object : TypeToken<ArrayList<Music>>() {}.type
+            if (jsonString != null) {
+                val data: ArrayList<Music> = GsonBuilder().create().fromJson(jsonString, typeToken)
+                FavouriteActivity.favouriteSongs.addAll(data)
+            }
+        }
 
         binding.btnShuffle.setOnClickListener {
-            val intent = Intent(this, PlayerActivity::class.java)
+            val intent = Intent(this@MainActivity, PlayerActivity::class.java)
             intent.putExtra("index", 0)
             intent.putExtra("class", "MainActivity")
             startActivity(intent)
         }
-
         binding.btnFavourite.setOnClickListener {
-            startActivity(Intent(this, FavouriteActivity::class.java))
+            startActivity(Intent(this@MainActivity, FavouriteActivity::class.java))
         }
-
         binding.btnPlaylist.setOnClickListener {
-            startActivity(Intent(this, PlaylistActivity::class.java))
+            startActivity(Intent(this@MainActivity, PlaylistActivity::class.java))
         }
 
         binding.navView.setNavigationItemSelectedListener {
@@ -86,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun requestRuntimePermission(): Boolean {
@@ -210,14 +224,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onResume() {
+        super.onResume()
+        //for storing favourite data using shared perferences
+        val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE).edit()
+        val jsonString = GsonBuilder().create().toJson(FavouriteActivity.favouriteSongs)
+        editor.putString("FavouriteSongs", jsonString)
+        editor.apply()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_view_menu, menu)
         val searchView = menu?.findItem(R.id.searchView)?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
             override fun onQueryTextSubmit(query: String?): Boolean = true
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 musicListSearch = ArrayList()
                 if (newText != null) {
@@ -230,7 +250,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 return true
             }
-
         })
         return super.onCreateOptionsMenu(menu)
     }

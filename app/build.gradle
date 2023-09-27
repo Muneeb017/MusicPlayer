@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
@@ -45,8 +45,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    // Glide for image loading
     implementation 'com.github.bumptech.glide:glide:4.14.2'
 
-    implementation('androidx.media:media:1.6.0')
+    // for notification
+    implementation 'androidx.media:media:1.6.0'
+
+    // for storing objects in shared preferences  :2.8.6
+    implementation 'com.google.code.gson:gson:2.10.1'
 
 }

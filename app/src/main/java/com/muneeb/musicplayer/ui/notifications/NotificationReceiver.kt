@@ -8,9 +8,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicplayer.ApplicationClass
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.data.exitApplication
+import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.setSongPosition
-import com.muneeb.musicplayer.ui.fragments.NowPlayingFragment
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
+import com.muneeb.musicplayer.ui.fragments.NowPlayingFragment
 
 class NotificationReceiver : BroadcastReceiver() {
 
@@ -49,19 +50,19 @@ class NotificationReceiver : BroadcastReceiver() {
 
         setSongPosition(increment = increment)
         PlayerActivity.musicService!!.createMediaPlayer()
-
         Glide.with(context).load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop())
             .into(PlayerActivity.binding.ivSongs)
         PlayerActivity.binding.tvSongsName.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
-
         Glide.with(context)
             .load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop())
             .into(NowPlayingFragment.binding.songImgNP)
         NowPlayingFragment.binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
-
         playMusic()
+        PlayerActivity.fIndex = favouriteChecker(PlayerActivity.musicListPA[PlayerActivity.songPosition].id)
+        if (PlayerActivity.isFavourite) PlayerActivity.binding.ivHeart.setImageResource(R.drawable.ic_favorite)
+        else PlayerActivity.binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
     }
 
 }

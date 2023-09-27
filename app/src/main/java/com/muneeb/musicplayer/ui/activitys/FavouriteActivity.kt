@@ -1,5 +1,6 @@
 package com.muneeb.musicplayer.ui.activitys
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,8 +14,8 @@ class FavouriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavouriteBinding
     private lateinit var adapter: FavouriteAdapter
 
-    companion object{
-        var favouriteSongs:ArrayList<Music> = ArrayList()
+    companion object {
+        var favouriteSongs: ArrayList<Music> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +29,19 @@ class FavouriteActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.favouriteRV.setHasFixedSize(true)
-        binding.favouriteRV.setItemViewCacheSize(15)
-        binding.favouriteRV.layoutManager = GridLayoutManager(this,4)
+        binding.rcvFavourite.setHasFixedSize(true)
+        binding.rcvFavourite.setItemViewCacheSize(15)
+        binding.rcvFavourite.layoutManager = GridLayoutManager(this, 4)
         adapter = FavouriteAdapter(this, favouriteSongs)
-        binding.favouriteRV.adapter = adapter
+        binding.rcvFavourite.adapter = adapter
+        if (favouriteSongs.size <1) binding.btnShuffle.hide()
+
+        binding.btnShuffle.setOnClickListener {
+            val intent = Intent(this@FavouriteActivity, PlayerActivity::class.java)
+            intent.putExtra("index", 0)
+            intent.putExtra("class", "FavouriteShuffle")
+            startActivity(intent)
+        }
 
     }
 

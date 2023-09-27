@@ -142,7 +142,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(musicListPA[songPosition].path))
             startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
         }
-
         binding.ivHeart.setOnClickListener {
             if (isFavourite){
                 isFavourite = false
@@ -194,6 +193,14 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun initializeLayout() {
         songPosition = intent.getIntExtra("index", 0)
         when (intent.getStringExtra("class")) {
+            "FavouriteAdapter" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
+                musicListPA = ArrayList()
+                musicListPA.addAll(FavouriteActivity.favouriteSongs)
+                setLayout()
+            }
             "NowPlaying" -> {
                 setLayout()
                 binding.tvTimeStart.text =
@@ -205,7 +212,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 if (isPlaying) binding.btnSongPause.setIconResource(R.drawable.ic_pause)
                 else binding.btnSongPause.setIconResource(R.drawable.ic_play)
             }
-
             "MusicAdapterSearch" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -214,7 +220,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.addAll(MainActivity.musicListSearch)
                 setLayout()
             }
-
             "MusicAdapter" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -222,9 +227,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA = ArrayList()
                 musicListPA.addAll(MainActivity.MusicListMA)
                 setLayout()
-                createMediaPlayer()
             }
-
             "MainActivity" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -233,7 +236,15 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.addAll(MainActivity.MusicListMA)
                 musicListPA.shuffle()
                 setLayout()
-                createMediaPlayer()
+            }
+            "FavouriteShuffle" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
+                musicListPA = ArrayList()
+                musicListPA.addAll(FavouriteActivity.favouriteSongs)
+                musicListPA.shuffle()
+                setLayout()
             }
         }
     }
