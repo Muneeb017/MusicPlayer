@@ -28,4 +28,6 @@
     <string name="min_60">60 Minutes</string>
     <string name="search_view">Search View</string>
     <string name="favourite_note">Tip: Play Music And Click On &#10084; To Add It Into Favourites. </string>
+    <string name="playlist_name">Playlist Name</string>
+    <string name="your_name">Your Name</string>
 </resources>

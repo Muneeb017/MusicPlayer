@@ -27,14 +27,17 @@ class FavouriteAdapter(private val context: Context, private var musicList: Arra
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         holder.name.text = musicList[position].title
+
         Glide.with(context).load(musicList[position].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(holder.image)
+
         holder.root.setOnClickListener {
             val intent = Intent(context, PlayerActivity::class.java)
             intent.putExtra("index", position)
             intent.putExtra("class", "FavouriteAdapter")
             ContextCompat.startActivity(context, intent, null)
         }
+
     }
 
     override fun getItemCount(): Int {

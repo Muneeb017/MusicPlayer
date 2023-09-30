@@ -27,6 +27,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/favourite"
@@ -53,5 +54,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="@color/cool_pink"
         app:strokeWidth="4dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvPlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        android:scrollbarThumbVertical="@drawable/scroll_bar_icon"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_playlist_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
