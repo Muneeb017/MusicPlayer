@@ -27,6 +27,7 @@ class PlaylistActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setTheme(R.style.coolPink)
 
@@ -35,7 +36,7 @@ class PlaylistActivity : AppCompatActivity() {
 
         binding.rcvPlaylist.setHasFixedSize(true)
         binding.rcvPlaylist.setItemViewCacheSize(15)
-        binding.rcvPlaylist.layoutManager = GridLayoutManager(this, 3)
+        binding.rcvPlaylist.layoutManager = GridLayoutManager(this, 2)
         adapter = PlaylistAdapter(this, musicPlaylist.ref)
         binding.rcvPlaylist.adapter = adapter
         binding.ivBack.setOnClickListener { finish() }

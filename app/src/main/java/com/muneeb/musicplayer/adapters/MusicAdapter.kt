@@ -15,8 +15,11 @@ import com.muneeb.musicplayer.databinding.ItemMusicBinding
 import com.muneeb.musicplayer.ui.activitys.MainActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
-class MusicAdapter(private val context: Context, private var musicList: ArrayList<Music>) :
-    RecyclerView.Adapter<MusicAdapter.MyHolder>() {
+class MusicAdapter(
+    private val context: Context,
+    private var musicList: ArrayList<Music>,
+    private var playlistDetails: Boolean = false
+) : RecyclerView.Adapter<MusicAdapter.MyHolder>() {
     class MyHolder(binding: ItemMusicBinding) : RecyclerView.ViewHolder(binding.root) {
 
         val title = binding.tvSongsName
@@ -45,8 +48,10 @@ class MusicAdapter(private val context: Context, private var musicList: ArrayLis
         holder.root.setOnClickListener {
             when {
                 MainActivity.search -> sendIntent(ref = "MusicAdapter", pos = position)
-                musicList[position].id == PlayerActivity.nowPlayingId ->
-                    sendIntent(ref = "NowPlaying", pos = PlayerActivity.songPosition)
+                musicList[position].id == PlayerActivity.nowPlayingId -> sendIntent(
+                    ref = "NowPlaying", pos = PlayerActivity.songPosition
+                )
+
                 else -> sendIntent(ref = "MusicAdapter", pos = position)
             }
         }
