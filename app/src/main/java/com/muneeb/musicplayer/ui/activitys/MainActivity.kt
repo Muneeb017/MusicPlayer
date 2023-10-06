@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.MusicAdapter
 import com.muneeb.musicplayer.data.Music
+import com.muneeb.musicplayer.data.MusicPlaylist
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.databinding.ActivityMainBinding
 import java.io.File
@@ -62,6 +63,13 @@ class MainActivity : AppCompatActivity() {
             if (jsonString != null) {
                 val data: ArrayList<Music> = GsonBuilder().create().fromJson(jsonString, typeToken)
                 FavouriteActivity.favouriteSongs.addAll(data)
+            }
+            PlaylistActivity.musicPlaylist = MusicPlaylist()
+            val jsonStringPlaylist = editor.getString("MusicPlaylist", null)
+            if (jsonStringPlaylist != null) {
+                val dataPlaylist: MusicPlaylist =
+                    GsonBuilder().create().fromJson(jsonStringPlaylist, MusicPlaylist::class.java)
+                PlaylistActivity.musicPlaylist = dataPlaylist
             }
         }
 
@@ -230,6 +238,8 @@ class MainActivity : AppCompatActivity() {
         val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE).edit()
         val jsonString = GsonBuilder().create().toJson(FavouriteActivity.favouriteSongs)
         editor.putString("FavouriteSongs", jsonString)
+        val jsonStringPlaylist = GsonBuilder().create().toJson(PlaylistActivity.musicPlaylist)
+        editor.putString("MusicPlaylist", jsonStringPlaylist)
         editor.apply()
     }
 

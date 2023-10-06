@@ -21,6 +21,11 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activitys.SelectionActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".ui.activitys.PlaylistDetailsActivity"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -49,7 +54,6 @@
         <receiver
             android:name=".ui.notifications.NotificationReceiver"
             android:enabled="true" />
-
     </application>
 
 </manifest>

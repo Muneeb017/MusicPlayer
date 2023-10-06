@@ -31,6 +31,7 @@
     <string name="playlist_name">Playlist Name</string>
     <string name="your_name">Your Name</string>
     <string name="enjoy_time">Enjoy Time</string>
-    <string name="add_song">Add Songs\n</string>
+    <string name="add_song">Add Songs</string>
     <string name="remove_all">Remove All</string>
+    <string name="search_song">Search Songs</string>
 </resources>

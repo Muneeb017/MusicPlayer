@@ -143,12 +143,11 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
         }
         binding.ivHeart.setOnClickListener {
-            if (isFavourite){
+            if (isFavourite) {
                 isFavourite = false
                 binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
                 FavouriteActivity.favouriteSongs.removeAt(fIndex)
-            }
-            else {
+            } else {
                 isFavourite = true
                 binding.ivHeart.setImageResource(R.drawable.ic_favorite)
                 FavouriteActivity.favouriteSongs.add(musicListPA[songPosition])
@@ -162,8 +161,16 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         Glide.with(this).load(musicListPA[songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(binding.ivSongs)
         binding.tvSongsName.text = musicListPA[songPosition].title
-        if (repeat) binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
-        if (min15 || min30 || min60) binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        if (repeat) binding.ivRepeat.setColorFilter(
+            ContextCompat.getColor(
+                this, R.color.purple_500
+            )
+        )
+        if (min15 || min30 || min60) binding.ivTimer.setColorFilter(
+            ContextCompat.getColor(
+                this, R.color.purple_500
+            )
+        )
         if (isFavourite) binding.ivHeart.setImageResource(R.drawable.ic_favorite)
         else binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
     }
@@ -201,6 +208,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.addAll(FavouriteActivity.favouriteSongs)
                 setLayout()
             }
+
             "NowPlaying" -> {
                 setLayout()
                 binding.tvTimeStart.text =
@@ -212,6 +220,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 if (isPlaying) binding.btnSongPause.setIconResource(R.drawable.ic_pause)
                 else binding.btnSongPause.setIconResource(R.drawable.ic_play)
             }
+
             "MusicAdapterSearch" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -220,6 +229,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.addAll(MainActivity.musicListSearch)
                 setLayout()
             }
+
             "MusicAdapter" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -228,6 +238,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.addAll(MainActivity.MusicListMA)
                 setLayout()
             }
+
             "MainActivity" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
@@ -237,12 +248,32 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.shuffle()
                 setLayout()
             }
+
             "FavouriteShuffle" -> {
                 val intent = Intent(this, MusicService::class.java)
                 bindService(intent, this, BIND_AUTO_CREATE)
                 startService(intent)
                 musicListPA = ArrayList()
                 musicListPA.addAll(FavouriteActivity.favouriteSongs)
+                musicListPA.shuffle()
+                setLayout()
+            }
+
+            "PlaylistDetailsAdapter" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
+                musicListPA = ArrayList()
+                musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetailsActivity.currentPlaylistPos].playlist)
+                setLayout()
+            }
+
+            "PlaylistDetailsShuffle" -> {
+                val intent = Intent(this, MusicService::class.java)
+                bindService(intent, this, BIND_AUTO_CREATE)
+                startService(intent)
+                musicListPA = ArrayList()
+                musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetailsActivity.currentPlaylistPos].playlist)
                 musicListPA.shuffle()
                 setLayout()
             }

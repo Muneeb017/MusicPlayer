@@ -88,15 +88,14 @@
         tools:listitem="@layout/item_music" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnShuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/white"
-        app:icon="@drawable/ic_add"
+        app:icon="@drawable/ic_shuffle"
         app:iconSize="35dp"
-        android:visibility="gone"
         app:iconTint="@color/cool_pink"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +117,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/add_song"
             android:drawableLeft="@drawable/ic_add"
             android:text="@string/add_song"
             android:textAllCaps="false"
@@ -131,7 +129,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/remove_all"
             android:drawableLeft="@drawable/ic_remove"
             android:text="@string/remove_all"
             android:textAllCaps="false"

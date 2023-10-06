@@ -1,13 +1,17 @@
 package com.muneeb.musicplayer.ui.activitys
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.GsonBuilder
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.MusicAdapter
+import com.muneeb.musicplayer.data.setDialogBtnBackground
 import com.muneeb.musicplayer.databinding.ActivityPlaylistDetailsBinding
 
 class PlaylistDetailsActivity : AppCompatActivity() {
@@ -26,17 +30,48 @@ class PlaylistDetailsActivity : AppCompatActivity() {
         binding = ActivityPlaylistDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         currentPlaylistPos = intent.extras?.get("index") as Int
         binding.rcvPlaylistDetails.setHasFixedSize(true)
         binding.rcvPlaylistDetails.setItemViewCacheSize(15)
         binding.rcvPlaylistDetails.layoutManager = LinearLayoutManager(this)
-        PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist.addAll(MainActivity.MusicListMA)
         musicAdapter = MusicAdapter(
             this,
             PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist,
             playlistDetails = true
         )
         binding.rcvPlaylistDetails.adapter = musicAdapter
+
+        binding.btnShuffle.setOnClickListener {
+            val intent = Intent(this@PlaylistDetailsActivity, PlayerActivity::class.java)
+            intent.putExtra("index", 0)
+            intent.putExtra("class", "PlaylistDetailsShuffle")
+            startActivity(intent)
+        }
+
+        binding.btnAddSongs.setOnClickListener {
+            val intent = Intent(this@PlaylistDetailsActivity, SelectionActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnRemoveAll.setOnClickListener {
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle("Remove").setMessage("Do you want to remove all songs from playlist?")
+                .setPositiveButton("Yes") { dialog, _ ->
+                    PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist.clear()
+                    musicAdapter.refreshPlaylist()
+                    dialog.dismiss()
+                }.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val customDialog = builder.create()
+            customDialog.show()
+
+            setDialogBtnBackground(this, customDialog)
+        }
 
     }
 
@@ -46,11 +81,20 @@ class PlaylistDetailsActivity : AppCompatActivity() {
         binding.playlistName.text = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].name
         binding.moreInfo.text =
             "Total ${musicAdapter.itemCount} Songs. \n\n" + "Create On:\n${PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].createdOn}\n\n" + " -- ${PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].createdBy}"
-        if (musicAdapter.itemCount > 0)
+        if (musicAdapter.itemCount > 0) {
             Glide.with(this)
-            .load(PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist[0].artUri)
-            .apply(RequestOptions().placeholder(R.color.black).centerCrop())
-            .into(binding.playlistImg)
-        binding.btnAdd.show()
+                .load(PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist[0].artUri)
+                .apply(RequestOptions().placeholder(R.color.black).centerCrop())
+                .into(binding.playlistImg)
+
+            binding.btnShuffle.show()
+        }
+        musicAdapter.notifyDataSetChanged()
+        //for storing favourite data using shared perferences
+        val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE).edit()
+        val jsonStringPlaylist = GsonBuilder().create().toJson(PlaylistActivity.musicPlaylist)
+        editor.putString("MusicPlaylist", jsonStringPlaylist)
+        editor.apply()
     }
+
 }
