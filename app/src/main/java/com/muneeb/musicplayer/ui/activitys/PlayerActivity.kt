@@ -2,9 +2,11 @@ package com.muneeb.musicplayer.ui.activitys
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.Color
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import android.net.Uri
@@ -281,17 +283,17 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     }
 
     private fun playMusic() {
-        isPlaying = true
-        musicService!!.mediaPlayer!!.start()
         binding.btnSongPause.setIconResource(R.drawable.ic_pause)
         musicService!!.showNotification(R.drawable.ic_pause)
+        musicService!!.mediaPlayer!!.start()
+        isPlaying = true
     }
 
     private fun pauseMusic() {
-        isPlaying = false
-        musicService!!.mediaPlayer!!.pause()
         binding.btnSongPause.setIconResource(R.drawable.ic_play)
         musicService!!.showNotification(R.drawable.ic_play)
+        musicService!!.mediaPlayer!!.pause()
+        isPlaying = false
     }
 
     private fun prevNextSong(increment: Boolean) {
@@ -311,6 +313,10 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         musicService = binder.currentService()
         createMediaPlayer()
         musicService!!.seekBarSetup()
+        musicService!!.audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        musicService!!.audioManager.requestAudioFocus(
+            musicService, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN
+        )
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.FavouriteAdapter
 import com.muneeb.musicplayer.data.Music
+import com.muneeb.musicplayer.data.checkPlaylist
 import com.muneeb.musicplayer.databinding.ActivityFavouriteBinding
 
 class FavouriteActivity : AppCompatActivity() {
@@ -25,6 +26,8 @@ class FavouriteActivity : AppCompatActivity() {
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        favouriteSongs = checkPlaylist(favouriteSongs)
+
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -34,7 +37,7 @@ class FavouriteActivity : AppCompatActivity() {
         binding.rcvFavourite.layoutManager = GridLayoutManager(this, 4)
         adapter = FavouriteAdapter(this, favouriteSongs)
         binding.rcvFavourite.adapter = adapter
-        if (favouriteSongs.size <1) binding.btnShuffle.hide()
+        if (favouriteSongs.size < 1) binding.btnShuffle.hide()
 
         binding.btnShuffle.setOnClickListener {
             val intent = Intent(this@FavouriteActivity, PlayerActivity::class.java)

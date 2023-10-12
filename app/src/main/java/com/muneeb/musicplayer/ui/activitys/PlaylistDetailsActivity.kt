@@ -11,6 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.adapters.MusicAdapter
+import com.muneeb.musicplayer.data.checkPlaylist
 import com.muneeb.musicplayer.data.setDialogBtnBackground
 import com.muneeb.musicplayer.databinding.ActivityPlaylistDetailsBinding
 
@@ -29,6 +30,9 @@ class PlaylistDetailsActivity : AppCompatActivity() {
 
         binding = ActivityPlaylistDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist =
+            checkPlaylist(playlist = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist)
 
         binding.ivBack.setOnClickListener {
             finish()

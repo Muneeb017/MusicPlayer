@@ -8,6 +8,7 @@ import com.google.android.material.color.MaterialColors
 import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.ui.activitys.FavouriteActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
+import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
@@ -63,6 +64,7 @@ fun setSongPosition(increment: Boolean) {
 
 fun exitApplication() {
     if (PlayerActivity.musicService != null) {
+        PlayerActivity.musicService!!.audioManager.abandonAudioFocus(PlayerActivity.musicService)
         PlayerActivity.musicService!!.stopForeground(true)
         PlayerActivity.musicService!!.mediaPlayer!!.release()
         PlayerActivity.musicService = null
@@ -97,6 +99,14 @@ fun setDialogBtnBackground(context: Context, dialog: AlertDialog) {
     dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)?.setBackgroundColor(
         MaterialColors.getColor(context, R.attr.dialogBtnBackground, Color.RED)
     )
+}
+
+fun checkPlaylist(playlist: ArrayList<Music>): ArrayList<Music> {
+    playlist.forEachIndexed { index, music ->
+        val file = File(music.path)
+        if (!file.exists()) playlist.removeAt(index)
+    }
+    return playlist
 }
 
 

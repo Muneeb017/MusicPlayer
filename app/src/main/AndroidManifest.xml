@@ -21,6 +21,9 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activitys.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activitys.SelectionActivity"
             android:exported="true"
             android:screenOrientation="portrait"
