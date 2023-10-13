@@ -7,6 +7,8 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".ApplicationClass"
@@ -21,18 +23,20 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activitys.FeedbackActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activitys.AboutActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activitys.SettingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activitys.SelectionActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:exported="true" />
         <activity
             android:name=".ui.activitys.PlaylistDetailsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:exported="true" />
         <activity
             android:name=".ui.activitys.PlaylistActivity"
             android:exported="true" />

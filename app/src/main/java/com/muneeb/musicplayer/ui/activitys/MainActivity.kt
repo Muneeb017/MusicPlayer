@@ -85,12 +85,20 @@ class MainActivity : AppCompatActivity() {
         binding.btnPlaylist.setOnClickListener {
             startActivity(Intent(this@MainActivity, PlaylistActivity::class.java))
         }
-
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navFeedback -> Toast.makeText(this, "Feedback", Toast.LENGTH_SHORT).show()
-                R.id.navSettings -> Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-                R.id.navAbout -> Toast.makeText(this, "About", Toast.LENGTH_SHORT).show()
+                R.id.navFeedback -> {
+                    val intent = Intent(this@MainActivity, FeedbackActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.navSettings -> {
+                    val intent = Intent(this@MainActivity, SettingActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.navAbout -> {
+                    val intent = Intent(this@MainActivity, AboutActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.navExit -> {
                     val builder = MaterialAlertDialogBuilder(this)
                     builder.setTitle("Exit").setMessage("Do you want to close app?")

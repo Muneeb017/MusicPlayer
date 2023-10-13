@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Music</string>
     <string name="shuffle_btn">Shuffle</string>
     <string name="favourites_btn">Favourites</string>
@@ -16,9 +17,9 @@
     <string name="favourite">Favourites</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="feedback">Feedback</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
+    <string name="feedback">Feedback</string>
     <string name="exit">Exit</string>
     <string name="songs_name">Songs Name</string>
     <string name="_00_00">00:00</string>
@@ -34,4 +35,11 @@
     <string name="add_song">Add Songs</string>
     <string name="remove_all">Remove All</string>
     <string name="search_song">Search Songs</string>
+    <string name="set_theme">Set Theme\n</string>
+    <string name="sort_by">Sort by</string>
+    <string name="version_name">Version Name</string>
+    <string name="topic_feedback">Topic Feedback\n</string>
+    <string name="email_feedback">Email Feedback</string>
+    <string name="send">Send</string>
+
 </resources>
