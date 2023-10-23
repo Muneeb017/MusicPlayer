@@ -12,8 +12,8 @@ import android.os.IBinder
 import android.os.Looper
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
+import com.muneeb.musicPlayer.R
 import com.muneeb.musicplayer.ApplicationClass
-import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.data.getImgArt
 import com.muneeb.musicplayer.ui.activitys.MainActivity

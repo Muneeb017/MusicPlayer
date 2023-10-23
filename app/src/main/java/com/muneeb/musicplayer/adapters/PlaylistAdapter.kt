@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.ItemPlaylistViewBinding
 import com.muneeb.musicplayer.data.Playlist
 import com.muneeb.musicplayer.data.setDialogBtnBackground
-import com.muneeb.musicplayer.databinding.ItemPlaylistViewBinding
 import com.muneeb.musicplayer.ui.activitys.PlaylistActivity
 import com.muneeb.musicplayer.ui.activitys.PlaylistDetailsActivity
 

@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.muneeb.musicPlayer.R
 import com.muneeb.musicplayer.ApplicationClass
-import com.muneeb.musicplayer.R
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.setSongPosition

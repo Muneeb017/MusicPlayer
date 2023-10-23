@@ -8,9 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.ItemFavouriteViewBinding
 import com.muneeb.musicplayer.data.Music
-import com.muneeb.musicplayer.databinding.ItemFavouriteViewBinding
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
 class FavouriteAdapter(private val context: Context, private var musicList: ArrayList<Music>) :

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutNav"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:padding="16dp"
-    android:animateLayoutChanges="true"
+    android:layout_height="260dp"
     android:layout_marginTop="80dp"
-    android:background="@color/cool_pink">
+    android:animateLayoutChanges="true"
+    android:background="@color/cool_pink"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Muneeb Khalid"
+        android:text="@string/muneeb_khalid"
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="bold|italic"
@@ -24,15 +25,16 @@
         android:id="@+id/imageView"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginTop="10dp"
-        android:src="@mipmap/app_icon_music_round"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/apple_icon_music_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to \nWorld of Music"
+        android:layout_marginTop="20sp"
+        android:text="@string/welcome_to_nworld_of_music"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold|italic"
@@ -40,5 +42,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

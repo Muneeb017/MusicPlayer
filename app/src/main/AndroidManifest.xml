@@ -11,43 +11,40 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".ApplicationClass"
+        android:name="com.muneeb.musicplayer.ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/app_icon_music"
+        android:icon="@mipmap/apple_icon_music"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/app_icon_music_round"
+        android:roundIcon="@mipmap/apple_icon_music_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MusicPlayer"
+        android:theme="@style/splash_screen"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activitys.FeedbackActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.AboutActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.AboutActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.SettingActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.SettingActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.SelectionActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.SelectionActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.PlaylistDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.PlaylistDetailsActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.PlaylistActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.PlaylistActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.FavouriteActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.FavouriteActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.PlayerActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activitys.PlayerActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.activitys.MainActivity"
+            android:name="com.muneeb.musicplayer.ui.activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,10 +53,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.MusicService" />
+        <service android:name="com.muneeb.musicplayer.service.MusicService" />
 
         <receiver
-            android:name=".ui.notifications.NotificationReceiver"
+            android:name="com.muneeb.musicplayer.ui.notifications.NotificationReceiver"
             android:enabled="true" />
     </application>
 

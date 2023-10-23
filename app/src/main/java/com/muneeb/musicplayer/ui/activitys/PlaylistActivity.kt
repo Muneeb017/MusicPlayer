@@ -6,13 +6,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.ActivityPlaylistBinding
+import com.muneeb.musicPlayer.databinding.DialogPlaylistAddBinding
 import com.muneeb.musicplayer.adapters.PlaylistAdapter
 import com.muneeb.musicplayer.data.MusicPlaylist
 import com.muneeb.musicplayer.data.Playlist
 import com.muneeb.musicplayer.data.setDialogBtnBackground
-import com.muneeb.musicplayer.databinding.ActivityPlaylistBinding
-import com.muneeb.musicplayer.databinding.DialogPlaylistAddBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -29,7 +29,7 @@ class PlaylistActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)

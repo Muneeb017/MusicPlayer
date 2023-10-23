@@ -4,9 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.databinding.ActivitySelectionBinding
 import com.muneeb.musicplayer.adapters.MusicAdapter
-import com.muneeb.musicplayer.databinding.ActivitySelectionBinding
 
 class SelectionActivity : AppCompatActivity() {
 
@@ -15,7 +14,7 @@ class SelectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivitySelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -30,7 +29,7 @@ class SelectionActivity : AppCompatActivity() {
         musicAdapter = MusicAdapter(this, MainActivity.MusicListMA, selectionActivity = true)
         binding.rcvSelection.adapter = musicAdapter
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchViewSA.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = true
             override fun onQueryTextChange(newText: String?): Boolean {
                 MainActivity.musicListSearch = ArrayList()

@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.color.MaterialColors
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
 import com.muneeb.musicplayer.ui.activitys.FavouriteActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 import java.io.File

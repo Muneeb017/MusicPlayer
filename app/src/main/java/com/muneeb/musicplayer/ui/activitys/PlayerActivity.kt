@@ -22,13 +22,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.ActivityPlayerBinding
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.data.setSongPosition
-import com.muneeb.musicplayer.databinding.ActivityPlayerBinding
 import com.muneeb.musicplayer.service.MusicService
 
 class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCompletionListener {
@@ -52,7 +52,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)

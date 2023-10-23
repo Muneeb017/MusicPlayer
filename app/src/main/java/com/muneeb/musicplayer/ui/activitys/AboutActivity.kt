@@ -1,17 +1,19 @@
 package com.muneeb.musicplayer.ui.activitys
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.muneeb.musicplayer.R
-import com.muneeb.musicplayer.databinding.ActivityAboutBinding
+import com.muneeb.musicPlayer.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAboutBinding
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)

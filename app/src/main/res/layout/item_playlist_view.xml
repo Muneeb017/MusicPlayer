@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
     app:cardCornerRadius="15dp"
-    app:strokeColor="@color/cool_pink"
+    app:strokeColor="?attr/themeColor"
     app:strokeWidth="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,10 +14,10 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/playlistImage"
-            style="@style/curved"
+            app:shapeAppearanceOverlay="@style/style"
             android:layout_width="170dp"
             android:layout_height="150dp"
-            android:src="@color/white"
+            android:src="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +44,7 @@
             android:layout_height="30dp"
             android:layout_margin="10dp"
             android:src="@drawable/ic_delete"
+            app:tint="?attr/themeColor"
             app:layout_constraintBottom_toBottomOf="@+id/playlistName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/playlistName" />

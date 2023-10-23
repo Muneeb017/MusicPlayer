@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cool_pink"
+        android:background="?attr/themeColor"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +49,10 @@
         android:backgroundTint="@color/white"
         app:icon="@drawable/ic_shuffle"
         app:iconSize="35dp"
-        app:iconTint="@color/cool_pink"
+        app:iconTint="?attr/themeColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/cool_pink"
+        app:strokeColor="?attr/themeColor"
         app:strokeWidth="4dp" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/cool_pink"
+        android:background="?attr/themeColor"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,21 +28,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="300dp"
+            android:id="@+id/searchViewSA"
+            android:layout_width="0dp"
             android:layout_height="50dp"
-            app:queryHint="@string/search_song"
-            app:searchIcon="@drawable/ic_search"
             android:focusable="false"
+            android:hint="@string/search_song"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:drawableStart="@drawable/ic_search"
             app:iconifiedByDefault="false"
             android:background="@drawable/custom_search_view"
-            android:layout_margin="5dp"
+            android:layout_marginHorizontal="15dp"
             app:closeIcon="@null"
             app:layout_constraintBottom_toBottomOf="@+id/ivBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBack"
-            app:layout_constraintTop_toTopOf="@+id/ivBack"
-            android:theme="@style/WhiteTextSearchViewTheme"/>
+            app:layout_constraintTop_toTopOf="@+id/ivBack"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.databinding.ActivityFavouriteBinding
 import com.muneeb.musicplayer.adapters.FavouriteAdapter
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.checkPlaylist
-import com.muneeb.musicplayer.databinding.ActivityFavouriteBinding
 
 class FavouriteActivity : AppCompatActivity() {
 
@@ -21,7 +20,8 @@ class FavouriteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
         setContentView(binding.root)

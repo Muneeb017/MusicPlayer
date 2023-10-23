@@ -10,9 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.FragmentNowPlayingBinding
 import com.muneeb.musicplayer.data.setSongPosition
-import com.muneeb.musicplayer.databinding.FragmentNowPlayingBinding
+import com.muneeb.musicplayer.ui.activitys.MainActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
 
 class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
@@ -25,6 +26,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        requireContext().theme.applyStyle(MainActivity.currentTheme[MainActivity.themeIndex], true)
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
         binding = FragmentNowPlayingBinding.bind(view)
         binding.root.visibility = View.INVISIBLE

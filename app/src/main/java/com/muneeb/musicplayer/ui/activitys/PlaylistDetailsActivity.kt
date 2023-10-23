@@ -9,11 +9,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
-import com.muneeb.musicplayer.R
+import com.muneeb.musicPlayer.R
+import com.muneeb.musicPlayer.databinding.ActivityPlaylistDetailsBinding
 import com.muneeb.musicplayer.adapters.MusicAdapter
 import com.muneeb.musicplayer.data.checkPlaylist
 import com.muneeb.musicplayer.data.setDialogBtnBackground
-import com.muneeb.musicplayer.databinding.ActivityPlaylistDetailsBinding
 
 class PlaylistDetailsActivity : AppCompatActivity() {
 
@@ -26,19 +26,19 @@ class PlaylistDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
 
         binding = ActivityPlaylistDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist =
-            checkPlaylist(playlist = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist)
 
         binding.ivBack.setOnClickListener {
             finish()
         }
 
-        currentPlaylistPos = intent.extras?.get("index") as Int
+        currentPlaylistPos = intent.extras?.getInt("index") as Int
+        try{PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist =
+            checkPlaylist(playlist = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist)}
+        catch(e: Exception){}
         binding.rcvPlaylistDetails.setHasFixedSize(true)
         binding.rcvPlaylistDetails.setItemViewCacheSize(15)
         binding.rcvPlaylistDetails.layoutManager = LinearLayoutManager(this)
