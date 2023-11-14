@@ -19,9 +19,9 @@ class AboutActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = "About"
 
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
 
         binding.aboutText.text =
             "Developed By: Muneeb Khalid" + "\n\nIf you want to provide feedback, \nI will love to hear that."
