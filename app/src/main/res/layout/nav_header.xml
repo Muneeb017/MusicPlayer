@@ -6,7 +6,7 @@
     android:layout_height="260dp"
     android:layout_marginTop="80dp"
     android:animateLayoutChanges="true"
-    android:background="@color/cool_pink"
+    android:background="@color/cool_blue"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/muneeb_khalid"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

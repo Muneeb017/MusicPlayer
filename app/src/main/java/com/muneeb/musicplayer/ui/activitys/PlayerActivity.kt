@@ -5,16 +5,20 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.database.Cursor
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.MediaStore
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -28,6 +32,7 @@ import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.formatDuration
+import com.muneeb.musicplayer.data.getImgArt
 import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.service.MusicService
 
@@ -50,39 +55,45 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var fIndex: Int = -1
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
-
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initializeLayout()
+        if (intent.data?.scheme.contentEquals("content")) {
+            val intentService = Intent(this, MusicService::class.java)
+            bindService(intentService, this, BIND_AUTO_CREATE)
+            startService(intentService)
+            musicListPA = ArrayList()
+            musicListPA.add(getMusicDetails(intent.data!!))
+            Glide.with(this)
+                .load(getImgArt(musicListPA[songPosition].path))
+                .apply(RequestOptions().placeholder(R.color.black).centerCrop())
+                .into(binding.ivSongs)
+            binding.tvSongsName.text = musicListPA[songPosition].title
+        } else initializeLayout()
 
         binding.ivBack.setOnClickListener {
             finish()
         }
-
         binding.btnSongPause.setOnClickListener {
             if (isPlaying) {
                 pauseMusic()
             } else playMusic()
         }
-
         binding.btnSongPrevious.setOnClickListener {
             prevNextSong(increment = false)
         }
-
         binding.btnSongNext.setOnClickListener {
             prevNextSong(increment = true)
         }
-
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     musicService!!.mediaPlayer!!.seekTo(progress)
-                    musicService!!.showNotification(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+                    musicService!!.showNotification(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play,0F)
                 }
             }
 
@@ -90,7 +101,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
 
         })
-
         binding.ivRepeat.setOnClickListener {
             if (!repeat) {
                 repeat = true
@@ -159,6 +169,24 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun getMusicDetails(contextUri: Uri): Music {
+        var cursor: Cursor? = null
+        try {
+            val projection = arrayOf(MediaStore.Audio.Media.DATA,MediaStore.Audio.Media.DURATION)
+            cursor = this.contentResolver.query(contextUri,projection,null,null,null)
+            val dataColum = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+            val durationColum = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+            cursor!!.moveToFirst()
+            val path = dataColum?.let { cursor.getString(it) }
+            val duration = durationColum?.let { cursor.getLong(it) }!!
+            return Music(id = "Unknown", title = path.toString(), album = "Unknown", artist = "Unknown", duration = duration,
+                artUri = "Unknown", path = path.toString())
+        } finally {
+            cursor?.close()
+        }
+    }
+
     private fun setLayout() {
         fIndex = favouriteChecker(musicListPA[songPosition].id)
         Glide.with(this).load(musicListPA[songPosition].artUri)
@@ -187,7 +215,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             musicService!!.mediaPlayer!!.start()
             isPlaying = true
             binding.btnSongPause.setIconResource(R.drawable.ic_pause)
-            musicService!!.showNotification(R.drawable.ic_pause)
+            musicService!!.showNotification(R.drawable.ic_pause,1F)
             binding.tvTimeStart.text =
                 formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
             binding.tvTimeEnd.text = formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
@@ -285,14 +313,14 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     private fun playMusic() {
         binding.btnSongPause.setIconResource(R.drawable.ic_pause)
-        musicService!!.showNotification(R.drawable.ic_pause)
+        musicService!!.showNotification(R.drawable.ic_pause,1F)
         musicService!!.mediaPlayer!!.start()
         isPlaying = true
     }
 
     private fun pauseMusic() {
         binding.btnSongPause.setIconResource(R.drawable.ic_play)
-        musicService!!.showNotification(R.drawable.ic_play)
+        musicService!!.showNotification(R.drawable.ic_play,0F)
         musicService!!.mediaPlayer!!.pause()
         isPlaying = false
     }
@@ -378,6 +406,11 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             }.start()
             dialog.dismiss()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (musicListPA[songPosition].id == "Unknown" && !isPlaying) exitApplication()
     }
 
 }

@@ -25,12 +25,13 @@ class FavouriteActivity : AppCompatActivity() {
 
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = "Favourites"
 
         favouriteSongs = checkPlaylist(favouriteSongs)
 
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
 
         binding.rcvFavourite.setHasFixedSize(true)
         binding.rcvFavourite.setItemViewCacheSize(15)

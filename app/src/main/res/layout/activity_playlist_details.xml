@@ -4,60 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activitys.PlaylistDetailsActivity">
+    tools:context="com.muneeb.musicplayer.ui.activitys.PlaylistDetailsActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/themeColor"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/themeColor"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:contentDescription="@string/back_btn"
-            android:src="@drawable/ic_arrow_back" />
+<!--        <TextView-->
+<!--            android:id="@+id/ivBack"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:text="@string/back"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="italic"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:textColor="@color/white" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-    <TextView
-        android:id="@+id/playlistName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/favourite"
-        android:gravity="center"
-        android:text="@string/enjoy_time"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:singleLine="true"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/playlistName"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="@string/favourite"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/enjoy_time"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="24sp"-->
+<!--        android:singleLine="true"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <LinearLayout
         android:id="@+id/linearLayoutDetails"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/playlistImg"
             android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:src="@color/black" />
+            android:src="@color/white" />
 
         <TextView
             android:id="@+id/moreInfo"
@@ -120,8 +124,9 @@
             android:drawableLeft="@drawable/ic_add"
             android:text="@string/add_song"
             android:textAllCaps="false"
+            android:textSize="18sp"
             android:textColor="@color/black"
-            app:drawableTint="@color/cool_pink" />
+            app:drawableTint="?attr/themeColor" />
 
         <Button
             android:id="@+id/btnRemoveAll"
@@ -131,9 +136,10 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_remove"
             android:text="@string/remove_all"
+            android:textSize="18sp"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            app:drawableTint="@color/cool_pink" />
+            app:drawableTint="?attr/themeColor" />
 
     </LinearLayout>
 

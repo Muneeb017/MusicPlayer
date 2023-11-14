@@ -27,13 +27,14 @@ class PlaylistDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
+        supportActionBar?.title = "Enjoy Time"
 
         binding = ActivityPlaylistDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
 
         currentPlaylistPos = intent.extras?.getInt("index") as Int
         try{PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist =
@@ -82,7 +83,7 @@ class PlaylistDetailsActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        binding.playlistName.text = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].name
+//        binding.playlistName.text = PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].name
         binding.moreInfo.text =
             "Total ${musicAdapter.itemCount} Songs. \n\n" + "Create On:\n${PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].createdOn}\n\n" + " -- ${PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].createdBy}"
         if (musicAdapter.itemCount > 0) {

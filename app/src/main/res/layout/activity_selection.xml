@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activitys.SelectionActivity">
+    tools:context="com.muneeb.musicplayer.ui.activitys.SelectionActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:background="?attr/themeColor"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <TextView
             android:id="@+id/ivBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:contentDescription="@string/back_btn"
-            android:src="@drawable/ic_arrow_back"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,13 +32,14 @@
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchViewSA"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:focusable="false"
             android:hint="@string/search_song"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:drawableStart="@drawable/ic_search"
             app:iconifiedByDefault="false"
+            android:backgroundTint="@color/white"
             android:background="@drawable/custom_search_view"
             android:layout_marginHorizontal="15dp"
             app:closeIcon="@null"

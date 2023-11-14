@@ -41,7 +41,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
                 .apply(RequestOptions().placeholder(R.color.black).centerCrop())
                 .into(binding.songImgNP)
             binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
-            PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
+            PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause,1F)
             playMusic()
         }
         binding.root.setOnClickListener {
@@ -72,7 +72,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         PlayerActivity.isPlaying = true
         PlayerActivity.musicService!!.mediaPlayer!!.start()
         binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
-        PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
+        PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause,1F)
         PlayerActivity.binding.btnSongNext.setIconResource(R.drawable.ic_pause)
     }
 
@@ -80,7 +80,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         PlayerActivity.isPlaying = false
         PlayerActivity.musicService!!.mediaPlayer!!.pause()
         binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
-        PlayerActivity.musicService!!.showNotification(R.drawable.ic_play)
+        PlayerActivity.musicService!!.showNotification(R.drawable.ic_play,0F)
         PlayerActivity.binding.btnSongNext.setIconResource(R.drawable.ic_play)
     }
 

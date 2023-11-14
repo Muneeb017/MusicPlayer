@@ -110,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener{
             when(it.itemId)
             {
+                R.id.navFeedback -> Toast.makeText(this,"Feedback Clicked",Toast.LENGTH_SHORT).show()
                 R.id.navSettings -> startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 R.id.navAbout -> startActivity(Intent(this@MainActivity, AboutActivity::class.java))
                 R.id.navExit -> {

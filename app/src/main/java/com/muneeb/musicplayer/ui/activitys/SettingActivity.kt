@@ -22,9 +22,9 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = "Setting"
 
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
+//        binding.ivBack.setOnClickListener {
+//            finish()
+//        }
         when(MainActivity.themeIndex){
             0 -> binding.coolPinkTheme.setBackgroundColor(Color.YELLOW)
             1 -> binding.coolBlueTheme.setBackgroundColor(Color.YELLOW)

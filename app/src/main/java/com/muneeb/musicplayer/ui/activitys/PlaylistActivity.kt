@@ -33,13 +33,14 @@ class PlaylistActivity : AppCompatActivity() {
 
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = "Playlists"
 
         binding.rcvPlaylist.setHasFixedSize(true)
         binding.rcvPlaylist.setItemViewCacheSize(15)
         binding.rcvPlaylist.layoutManager = GridLayoutManager(this, 2)
         adapter = PlaylistAdapter(this, musicPlaylist.ref)
         binding.rcvPlaylist.adapter = adapter
-        binding.ivBack.setOnClickListener { finish() }
+//        binding.ivBack.setOnClickListener { finish() }
         binding.btnAdd.setOnClickListener { customAlertDialog() }
 
     }

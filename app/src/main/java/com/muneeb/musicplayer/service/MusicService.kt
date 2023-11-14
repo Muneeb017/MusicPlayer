@@ -7,10 +7,13 @@ import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Binder
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.NotificationCompat
 import com.muneeb.musicPlayer.R
 import com.muneeb.musicplayer.ApplicationClass
@@ -41,7 +44,7 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
         }
     }
 
-    fun showNotification(playPauseBtn: Int) {
+    fun showNotification(playPauseBtn: Int, playbackSpeed: Float) {
 
         val intent = Intent(baseContext, MainActivity::class.java)
         val contentIntent =
@@ -93,6 +96,21 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
             .addAction(R.drawable.ic_next, "Next", nextPendingIntent)
             .addAction(R.drawable.ic_exit, "Exit", exitPendingIntent).build()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            mediaSession.setMetadata(
+                MediaMetadataCompat.Builder().putLong(
+                    MediaMetadataCompat.METADATA_KEY_DURATION, mediaPlayer!!.duration.toLong()
+                ).build()
+            )
+            mediaSession.setPlaybackState(
+                PlaybackStateCompat.Builder().setState(
+                    PlaybackStateCompat.STATE_PLAYING,
+                    mediaPlayer!!.currentPosition.toLong(),
+                    playbackSpeed
+                ).setActions(PlaybackStateCompat.ACTION_SEEK_TO).build()
+            )
+        }
+
         startForeground(13, notification)
     }
 
@@ -103,7 +121,7 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
             PlayerActivity.musicService!!.mediaPlayer!!.setDataSource(PlayerActivity.musicListPA[PlayerActivity.songPosition].path)
             PlayerActivity.musicService!!.mediaPlayer!!.prepare()
             PlayerActivity.binding.btnSongPause.setIconResource(R.drawable.ic_pause)
-            PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)
+            PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause,0F)
             PlayerActivity.binding.tvTimeStart.text =
                 formatDuration(mediaPlayer!!.currentPosition.toLong())
             PlayerActivity.binding.tvTimeEnd.text = formatDuration(mediaPlayer!!.duration.toLong())
@@ -130,14 +148,14 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
 //             pause music
             PlayerActivity.binding.btnSongPause.setIconResource(R.drawable.ic_play)
             NowPlayingFragment.binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
-            showNotification(R.drawable.ic_play)
+            showNotification(R.drawable.ic_play,0F)
             PlayerActivity.isPlaying = false
             mediaPlayer!!.pause()
         } else {
 //             play music
             PlayerActivity.binding.btnSongPause.setIconResource(R.drawable.ic_pause)
             NowPlayingFragment.binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
-            showNotification(R.drawable.ic_pause)
+            showNotification(R.drawable.ic_pause,1F)
             PlayerActivity.isPlaying = true
             mediaPlayer!!.start()
         }

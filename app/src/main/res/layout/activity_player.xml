@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context=".ui.activitys.PlayerActivity">
+    tools:context="com.muneeb.musicplayer.ui.activitys.PlayerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="15dp"
             android:contentDescription="@string/back_btn"
             android:src="@drawable/ic_arrow_back"
@@ -44,10 +44,11 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivSongs"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="35dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_music_player"
         app:shapeAppearanceOverlay="@style/curved" />
 
@@ -74,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:backgroundTint="@color/white"
             app:icon="@drawable/ic_previous"
             app:iconSize="30dp" />
 
@@ -82,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:layout_marginHorizontal="40dp"
-            android:backgroundTint="@android:color/holo_red_light"
+            android:layout_marginHorizontal="30dp"
+            android:backgroundTint="@android:color/black"
             app:elevation="0dp"
             app:icon="@drawable/ic_pause"
             app:iconSize="40dp"
@@ -95,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_next"
+            android:backgroundTint="@color/white"
             android:layout_margin="8dp"
             app:iconSize="30dp" />
 

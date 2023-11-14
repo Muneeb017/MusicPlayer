@@ -22,33 +22,49 @@
         android:supportsRtl="true"
         android:theme="@style/splash_screen"
         tools:targetApi="31">
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.AboutActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.SettingActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.SelectionActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.PlaylistDetailsActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.PlaylistActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.FavouriteActivity"
             android:exported="true" />
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.PlayerActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.APP_BROWSER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:mimeType="audio/*"
+                    android:scheme="content" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name="com.muneeb.musicplayer.ui.activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
