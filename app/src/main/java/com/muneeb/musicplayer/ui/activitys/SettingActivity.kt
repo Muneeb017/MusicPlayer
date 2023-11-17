@@ -31,12 +31,14 @@ class SettingActivity : AppCompatActivity() {
             2 -> binding.coolPurpleTheme.setBackgroundColor(Color.YELLOW)
             3 -> binding.coolGreenTheme.setBackgroundColor(Color.YELLOW)
             4 -> binding.coolBlackTheme.setBackgroundColor(Color.YELLOW)
+            5 -> binding.coolRedTheme.setBackgroundColor(Color.YELLOW)
         }
         binding.coolPinkTheme.setOnClickListener { saveTheme(0) }
         binding.coolBlueTheme.setOnClickListener { saveTheme(1) }
         binding.coolPurpleTheme.setOnClickListener { saveTheme(2) }
         binding.coolGreenTheme.setOnClickListener { saveTheme(3) }
         binding.coolBlackTheme.setOnClickListener { saveTheme(4) }
+        binding.coolRedTheme.setOnClickListener { saveTheme(5) }
         binding.versionName.text = setVersionDetails()
         binding.sortBtn.setOnClickListener {
             val menuList = arrayOf("Recently Added", "Song Title", "File Size")

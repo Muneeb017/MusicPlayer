@@ -54,13 +54,18 @@
 
     <TextView
         android:id="@+id/tvSongsName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:text="@string/song_name"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -124,6 +129,7 @@
             android:id="@+id/seekbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:theme="@style/SeekBarColor"
             android:layout_weight="1" />
 
         <TextView
@@ -150,6 +156,7 @@
             android:layout_margin="15dp"
             android:layout_weight="1"
             android:contentDescription="@string/repeat_btn"
+            app:tint="@color/cool_blue"
             android:src="@drawable/ic_repeat" />
 
         <ImageView
@@ -158,6 +165,7 @@
             android:layout_height="30dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
+            app:tint="@color/cool_blue"
             android:contentDescription="@string/equalizer_btn"
             android:src="@drawable/ic_graphic_eq" />
 
@@ -167,6 +175,7 @@
             android:layout_height="30dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
+            app:tint="@color/cool_blue"
             android:contentDescription="@string/timer_btn"
             android:src="@drawable/ic_timer" />
 
@@ -176,6 +185,7 @@
             android:layout_height="30dp"
             android:layout_margin="15dp"
             android:layout_weight="1"
+            app:tint="@color/cool_blue"
             android:contentDescription="@string/share_btn"
             android:src="@drawable/ic_share" />
 

@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
         lateinit var musicListSearch : ArrayList<Music>
         var search: Boolean = false
         var themeIndex: Int = 0
-        val currentTheme = arrayOf(R.style.coolPink, R.style.coolBlue, R.style.coolPurple, R.style.coolGreen, R.style.coolBlack)
+        val currentTheme = arrayOf(R.style.coolPink, R.style.coolBlue, R.style.coolPurple, R.style.coolGreen, R.style.coolBlack,R.style.coolRed)
         val currentThemeNav = arrayOf(
             R.style.coolPinkNav, R.style.coolBlueNav, R.style.coolPurpleNav, R.style.coolGreenNav,
-            R.style.coolBlackNav)
+            R.style.coolBlackNav,R.style.coolRedNav)
         val currentGradient = arrayOf(
             R.drawable.gradient_pink, R.drawable.gradient_blue, R.drawable.gradient_purple, R.drawable.gradient_green,
-            R.drawable.gradient_black)
+            R.drawable.gradient_black,R.drawable.gradient_red)
         var sortOrder: Int = 0
         val sortingList = arrayOf(MediaStore.Audio.Media.DATE_ADDED + " DESC", MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.SIZE + " DESC")

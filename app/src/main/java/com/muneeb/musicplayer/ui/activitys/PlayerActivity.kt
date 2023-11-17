@@ -15,12 +15,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.MediaStore
-import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -104,10 +104,10 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         binding.ivRepeat.setOnClickListener {
             if (!repeat) {
                 repeat = true
-                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             } else {
                 repeat = false
-                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
+                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.cool_blue))
             }
         }
         binding.ivGraphic.setOnClickListener {
@@ -136,7 +136,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                         min60 = false
                         binding.ivTimer.setColorFilter(
                             ContextCompat.getColor(
-                                this, R.color.cool_pink
+                                this, R.color.cool_blue
                             )
                         )
                     }.setNegativeButton("No") { dialog, _ ->
@@ -194,12 +194,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         binding.tvSongsName.text = musicListPA[songPosition].title
         if (repeat) binding.ivRepeat.setColorFilter(
             ContextCompat.getColor(
-                this, R.color.purple_500
+                this, R.color.cool_blue
             )
         )
         if (min15 || min30 || min60) binding.ivTimer.setColorFilter(
             ContextCompat.getColor(
-                this, R.color.purple_500
+                this, R.color.cool_blue
             )
         )
         if (isFavourite) binding.ivHeart.setImageResource(R.drawable.ic_favorite)
@@ -373,10 +373,10 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         dialog.setContentView(R.layout.bottom_sheet_dialog)
         dialog.show()
 
-        dialog.findViewById<LinearLayout>(R.id.min_15)?.setOnClickListener {
+        dialog.findViewById<CardView>(R.id.min_15)?.setOnClickListener {
             Toast.makeText(baseContext, "Music will stop after 15 minutes", Toast.LENGTH_SHORT)
                 .show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min15 = true
             Thread {
                 Thread.sleep((15 * 60000).toLong())
@@ -385,9 +385,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             dialog.dismiss()
         }
 
-        dialog.findViewById<LinearLayout>(R.id.min_30)?.setOnClickListener {
+        dialog.findViewById<CardView>(R.id.min_30)?.setOnClickListener {
             Toast.makeText(this, "Music will stop after 30 minutes", Toast.LENGTH_SHORT).show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min30 = true
             Thread {
                 Thread.sleep((30 * 60000).toLong())
@@ -396,9 +396,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             dialog.dismiss()
         }
 
-        dialog.findViewById<LinearLayout>(R.id.min_60)?.setOnClickListener {
+        dialog.findViewById<CardView>(R.id.min_60)?.setOnClickListener {
             Toast.makeText(this, "Music will stop after 60 minutes", Toast.LENGTH_SHORT).show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min60 = true
             Thread {
                 Thread.sleep((60 * 60000).toLong())
