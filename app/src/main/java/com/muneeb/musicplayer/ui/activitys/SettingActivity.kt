@@ -22,9 +22,6 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = "Setting"
 
-//        binding.ivBack.setOnClickListener {
-//            finish()
-//        }
         when(MainActivity.themeIndex){
             0 -> binding.coolPinkTheme.setBackgroundColor(Color.YELLOW)
             1 -> binding.coolBlueTheme.setBackgroundColor(Color.YELLOW)
@@ -40,6 +37,7 @@ class SettingActivity : AppCompatActivity() {
         binding.coolBlackTheme.setOnClickListener { saveTheme(4) }
         binding.coolRedTheme.setOnClickListener { saveTheme(5) }
         binding.versionName.text = setVersionDetails()
+
         binding.sortBtn.setOnClickListener {
             val menuList = arrayOf("Recently Added", "Song Title", "File Size")
             var currentSort = MainActivity.sortOrder
@@ -83,7 +81,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun setVersionDetails():String{
-        return "Version Name: ${BuildConfig.VERSION_NAME}"
+        return "Version Name:  ${BuildConfig.VERSION_NAME}"
     }
 
 }
