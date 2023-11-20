@@ -7,14 +7,17 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.database.Cursor
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
+import android.media.audiofx.LoudnessEnhancer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -28,11 +31,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.muneeb.musicPlayer.R
 import com.muneeb.musicPlayer.databinding.ActivityPlayerBinding
+import com.muneeb.musicPlayer.databinding.AudioBoosterBinding
+import com.muneeb.musicPlayer.databinding.BottomSheetMoreBinding
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.favouriteChecker
 import com.muneeb.musicplayer.data.formatDuration
 import com.muneeb.musicplayer.data.getImgArt
+import com.muneeb.musicplayer.data.setDialogBtnBackground
 import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.service.MusicService
 
@@ -53,6 +59,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var nowPlayingId: String = ""
         var isFavourite: Boolean = false
         var fIndex: Int = -1
+        lateinit var loudnessEnhancer: LoudnessEnhancer
+
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -74,6 +82,29 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 .into(binding.ivSongs)
             binding.tvSongsName.text = musicListPA[songPosition].title
         } else initializeLayout()
+
+        //audio booster feature
+        binding.boosterBtnPA.setOnClickListener {
+            val customDialogB = LayoutInflater.from(this).inflate(R.layout.audio_booster, binding.root, false)
+            val bindingB = AudioBoosterBinding.bind(customDialogB)
+            val dialogB = MaterialAlertDialogBuilder(this).setView(customDialogB)
+                .setOnCancelListener { playMusic() }
+                .setPositiveButton("OK"){self, _ ->
+                    loudnessEnhancer.setTargetGain(bindingB.verticalBar.progress * 100)
+                    playMusic()
+                    self.dismiss()
+                }
+                .setBackground(ColorDrawable(0xffffff.toInt()))
+                .create()
+            dialogB.show()
+
+            bindingB.verticalBar.progress = loudnessEnhancer.targetGain.toInt()/100
+            bindingB.progressText.text = "Audio Boost\n\n${loudnessEnhancer.targetGain.toInt()/10} %"
+            bindingB.verticalBar.setOnProgressChangeListener {
+                bindingB.progressText.text = "Audio Boost\n\n${it*10} %"
+            }
+            setDialogBtnBackground(this, dialogB)
+        }
 
         binding.ivBack.setOnClickListener {
             finish()
@@ -101,16 +132,82 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
 
         })
-        binding.ivRepeat.setOnClickListener {
-            if (!repeat) {
-                repeat = true
-                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
+
+        binding.ivMore.setOnClickListener {
+            showMoreBottomSheet()
+        }
+
+        binding.ivShare.setOnClickListener {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "audio/*"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(musicListPA[songPosition].path))
+            startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
+        }
+
+        binding.ivHeart.setOnClickListener {
+            if (isFavourite) {
+                // Check if the list is not empty before attempting to remove an element
+                if (FavouriteActivity.favouriteSongs.isNotEmpty()) {
+                    // Ensure fIndex is within the valid range
+                    if (fIndex >= 0 && fIndex < FavouriteActivity.favouriteSongs.size) {
+                        isFavourite = false
+                        binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
+                        FavouriteActivity.favouriteSongs.removeAt(fIndex)
+                    } else {
+                        // Handle the case where fIndex is not a valid index
+                        // You might want to log or display an error message here
+                    }
+                }
             } else {
-                repeat = false
-                binding.ivRepeat.setColorFilter(ContextCompat.getColor(this, R.color.cool_blue))
+                isFavourite = true
+                binding.ivHeart.setImageResource(R.drawable.ic_favorite)
+                FavouriteActivity.favouriteSongs.add(musicListPA[songPosition])
             }
         }
-        binding.ivGraphic.setOnClickListener {
+
+
+    }
+
+    private fun showMoreBottomSheet() {
+        val sheet = BottomSheetDialog(this)
+        val view = BottomSheetMoreBinding.inflate(layoutInflater)
+
+        view.ivTimer.setOnClickListener {
+            val timer = min15 || min30 || min60
+            if (!timer) {
+                showBottomSheetDialog()
+                view.ivTimer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.cool_pink))
+            }
+            else {
+                val builder = MaterialAlertDialogBuilder(this)
+                builder.setTitle("Stop Timer").setMessage("Do you want to stop timer?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        min15 = false
+                        min30 = false
+                        min60 = false
+                        view.ivTimer.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                    }.setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val customDialog = builder.create()
+                customDialog.show()
+                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
+                customDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED)
+            }
+        }
+
+        view.ivRepeat.setOnClickListener {
+            if (!repeat) {
+                repeat = true
+                view.ivRepeat.setCardBackgroundColor(ContextCompat.getColor(this, R.color.cool_pink))
+            } else {
+                repeat = false
+                view.ivRepeat.setCardBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            }
+        }
+
+        view.ivGraphic.setOnClickListener {
             try {
                 val eqIntent = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
                 eqIntent.putExtra(
@@ -124,49 +221,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             }
         }
 
-        binding.ivTimer.setOnClickListener {
-            val timer = min15 || min30 || min60
-            if (!timer) showBottomSheetDialog()
-            else {
-                val builder = MaterialAlertDialogBuilder(this)
-                builder.setTitle("Stop Timer").setMessage("Do you want to stop timer?")
-                    .setPositiveButton("Yes") { _, _ ->
-                        min15 = false
-                        min30 = false
-                        min60 = false
-                        binding.ivTimer.setColorFilter(
-                            ContextCompat.getColor(
-                                this, R.color.cool_blue
-                            )
-                        )
-                    }.setNegativeButton("No") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                val customDialog = builder.create()
-                customDialog.show()
-                customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
-                customDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED)
-            }
-        }
-        binding.ivShare.setOnClickListener {
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type = "audio/*"
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(musicListPA[songPosition].path))
-            startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
-        }
-        binding.ivHeart.setOnClickListener {
-            if (isFavourite) {
-                isFavourite = false
-                binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
-                FavouriteActivity.favouriteSongs.removeAt(fIndex)
-            } else {
-                isFavourite = true
-                binding.ivHeart.setImageResource(R.drawable.ic_favorite)
-                FavouriteActivity.favouriteSongs.add(musicListPA[songPosition])
-            }
-        }
-
+        sheet.setCancelable(true)
+        sheet.setContentView(view.root)
+        sheet.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -192,16 +249,22 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         Glide.with(this).load(musicListPA[songPosition].artUri)
             .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(binding.ivSongs)
         binding.tvSongsName.text = musicListPA[songPosition].title
-        if (repeat) binding.ivRepeat.setColorFilter(
-            ContextCompat.getColor(
-                this, R.color.cool_blue
-            )
-        )
-        if (min15 || min30 || min60) binding.ivTimer.setColorFilter(
-            ContextCompat.getColor(
-                this, R.color.cool_blue
-            )
-        )
+
+//        if (repeat) binding.ivRepeat.setColorFilter(
+//            ContextCompat.getColor(
+//                this, R.color.cool_blue
+//            )
+//        )
+
+//        if (min15 || min30 || min60) {
+//            val view = BottomSheetMoreBinding.inflate(layoutInflater)
+//            binding.ivTimer.setColorFilter(
+//                ContextCompat.getColor(
+//                    this, R.color.cool_blue
+//                )
+//            )
+//        }
+
         if (isFavourite) binding.ivHeart.setImageResource(R.drawable.ic_favorite)
         else binding.ivHeart.setImageResource(R.drawable.ic_favorite_empty)
     }
@@ -223,6 +286,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             binding.seekbar.max = musicService!!.mediaPlayer!!.duration
             musicService!!.mediaPlayer!!.setOnCompletionListener(this)
             nowPlayingId = musicListPA[songPosition].id
+            playMusic()
+            loudnessEnhancer = LoudnessEnhancer(musicService!!.mediaPlayer!!.audioSessionId)
+            loudnessEnhancer.enabled = true
         } catch (e: Exception) {
             return
         }
@@ -369,42 +435,40 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     }
 
     private fun showBottomSheetDialog() {
-        val dialog = BottomSheetDialog(this@PlayerActivity)
-        dialog.setContentView(R.layout.bottom_sheet_dialog)
-        dialog.show()
+        val view = BottomSheetDialog(this@PlayerActivity)
+        val more = BottomSheetMoreBinding.inflate(layoutInflater)
+        view.setContentView(R.layout.bottom_sheet_dialog)
+        view.show()
 
-        dialog.findViewById<CardView>(R.id.min_15)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.min_15)?.setOnClickListener {
             Toast.makeText(baseContext, "Music will stop after 15 minutes", Toast.LENGTH_SHORT)
                 .show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min15 = true
             Thread {
                 Thread.sleep((15 * 60000).toLong())
                 if (min15) exitApplication()
             }.start()
-            dialog.dismiss()
+            view.dismiss()
         }
 
-        dialog.findViewById<CardView>(R.id.min_30)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.min_30)?.setOnClickListener {
             Toast.makeText(this, "Music will stop after 30 minutes", Toast.LENGTH_SHORT).show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min30 = true
             Thread {
                 Thread.sleep((30 * 60000).toLong())
                 if (min30) exitApplication()
             }.start()
-            dialog.dismiss()
+            view.dismiss()
         }
 
-        dialog.findViewById<CardView>(R.id.min_60)?.setOnClickListener {
+        view.findViewById<CardView>(R.id.min_60)?.setOnClickListener {
             Toast.makeText(this, "Music will stop after 60 minutes", Toast.LENGTH_SHORT).show()
-            binding.ivTimer.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
             min60 = true
             Thread {
                 Thread.sleep((60 * 60000).toLong())
                 if (min60) exitApplication()
             }.start()
-            dialog.dismiss()
+            view.dismiss()
         }
     }
 

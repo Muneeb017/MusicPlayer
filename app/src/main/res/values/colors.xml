@@ -14,4 +14,9 @@
     <color name="cool_green">#64dd17</color>
     <color name="cool_pink">#f50057</color>
     <color name="yellow">#ffd600</color>
+
+    <color name="colorPrimary">#017500</color>
+    <color name="colorPrimaryDark">#015A00</color>
+    <color name="colorAccent">#ff7301</color>
+    <color name="placeholderBackground">#FFEBDC</color>
 </resources>

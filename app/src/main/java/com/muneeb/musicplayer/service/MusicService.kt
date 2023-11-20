@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.audiofx.LoudnessEnhancer
 import android.os.Binder
 import android.os.Build
 import android.os.Handler
@@ -128,6 +129,8 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
             PlayerActivity.binding.seekbar.progress = 0
             PlayerActivity.binding.seekbar.max = mediaPlayer!!.duration
             PlayerActivity.nowPlayingId = PlayerActivity.musicListPA[PlayerActivity.songPosition].id
+            PlayerActivity.loudnessEnhancer = LoudnessEnhancer(mediaPlayer!!.audioSessionId)
+            PlayerActivity.loudnessEnhancer.enabled = true
         } catch (e: Exception) {
             return
         }
