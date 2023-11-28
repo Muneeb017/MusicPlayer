@@ -6,45 +6,30 @@
     android:layout_height="match_parent"
     tools:context="com.muneeb.musicplayer.ui.activitys.PlaylistDetailsActivity">
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?attr/themeColor"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        <TextView-->
-<!--            android:id="@+id/ivBack"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:text="@string/back"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textStyle="italic"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:textColor="@color/white" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:text="@string/enjoy_time"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!--    </LinearLayout>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/playlistName"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:contentDescription="@string/favourite"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@string/enjoy_time"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="24sp"-->
-<!--        android:singleLine="true"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linearLayoutDetails"
@@ -55,7 +40,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/Name">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/playlistImg"
@@ -80,9 +65,9 @@
         android:id="@+id/rcvPlaylistDetails"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
         android:scrollbarThumbVertical="@drawable/scroll_bar_icon"
         android:scrollbars="vertical"
-        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,8 +108,8 @@
             android:drawableLeft="@drawable/ic_add"
             android:text="@string/add_song"
             android:textAllCaps="false"
-            android:textSize="18sp"
             android:textColor="@color/black"
+            android:textSize="18sp"
             app:drawableTint="?attr/themeColor" />
 
         <Button
@@ -135,9 +120,9 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_remove"
             android:text="@string/remove_all"
-            android:textSize="18sp"
             android:textAllCaps="false"
             android:textColor="@color/black"
+            android:textSize="18sp"
             app:drawableTint="?attr/themeColor" />
 
     </LinearLayout>

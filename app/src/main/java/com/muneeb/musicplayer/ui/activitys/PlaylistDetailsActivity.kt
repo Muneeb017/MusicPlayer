@@ -27,7 +27,7 @@ class PlaylistDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
-        supportActionBar?.title = "Enjoy Time"
+        supportActionBar?.hide()
 
         binding = ActivityPlaylistDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -69,6 +69,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         setTheme(MainActivity.currentThemeNav[MainActivity.themeIndex])
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         if (intent.data?.scheme.contentEquals("content")) {
             val intentService = Intent(this, MusicService::class.java)

@@ -18,6 +18,7 @@ class SelectionActivity : AppCompatActivity() {
 
         binding = ActivitySelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         binding.ivBack.setOnClickListener {
             finish()

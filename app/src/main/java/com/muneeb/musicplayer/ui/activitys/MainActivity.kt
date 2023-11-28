@@ -27,17 +27,19 @@ import com.google.gson.reflect.TypeToken
 import com.muneeb.musicPlayer.R
 import com.muneeb.musicPlayer.databinding.ActivityMainBinding
 import com.muneeb.musicplayer.adapters.MusicAdapter
+import com.muneeb.musicplayer.adapters.MusicMainAdapter
 import com.muneeb.musicplayer.data.Music
 import com.muneeb.musicplayer.data.MusicPlaylist
 import com.muneeb.musicplayer.data.exitApplication
 import com.muneeb.musicplayer.data.setDialogBtnBackground
+import com.muneeb.musicplayer.ui.fragments.NowPlayingFragment
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var musicAdapter: MusicAdapter
+    private lateinit var musicMainAdapter: MusicMainAdapter
 
     companion object{
         lateinit var MusicListMA : ArrayList<Music>
@@ -182,9 +184,9 @@ class MainActivity : AppCompatActivity() {
         binding.rcvSongs.setHasFixedSize(true)
         binding.rcvSongs.setItemViewCacheSize(13)
         binding.rcvSongs.layoutManager = LinearLayoutManager(this@MainActivity)
-        musicAdapter = MusicAdapter(this@MainActivity, MusicListMA)
-        binding.rcvSongs.adapter = musicAdapter
-        binding.tvTotalSongs.text  = "Total Songs : "+musicAdapter.itemCount
+        musicMainAdapter = MusicMainAdapter(this@MainActivity, MusicListMA)
+        binding.rcvSongs.adapter = musicMainAdapter
+        binding.tvTotalSongs.text  = "Total Songs : "+musicMainAdapter.itemCount
 
         //for refreshing layout on swipe from top
 //      binding.refreshLayout.setOnRefreshListener {
@@ -252,7 +254,7 @@ class MainActivity : AppCompatActivity() {
         if(sortOrder != sortValue){
             sortOrder = sortValue
             MusicListMA = getAllAudio()
-            musicAdapter.updateMusicList(MusicListMA)
+            musicMainAdapter.updateMusicList(MusicListMA)
         }
         if(PlayerActivity.musicService != null) binding.nowPlaying.visibility = View.VISIBLE
     }
@@ -272,7 +274,7 @@ class MainActivity : AppCompatActivity() {
                         if(song.title.lowercase().contains(userInput))
                             musicListSearch.add(song)
                     search = true
-                    musicAdapter.updateMusicList(searchList = musicListSearch)
+                    musicMainAdapter.updateMusicList(searchList = musicListSearch)
                 }
                 return true
             }

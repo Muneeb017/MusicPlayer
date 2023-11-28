@@ -8,78 +8,103 @@
     tools:context="com.muneeb.musicplayer.ui.activitys.SettingActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/layoutColor"
+        android:id="@+id/Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:text="@string/settings"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layoutColor"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:padding="10dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginTop="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Name">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolPinkTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/cool_pink" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolBlueTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/cool_blue" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolPinkTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/cool_pink" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolPurpleTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/purple_500" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolBlueTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/cool_blue" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolGreenTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/cool_green" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolPurpleTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/purple_500" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolBlackTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/black" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolGreenTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/cool_green" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coolRedTheme"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/circle_icon"
-            android:tint="@color/red" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolBlackTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/black" />
 
-    </LinearLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/coolRedTheme"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/circle_icon"
+                android:tint="@color/red" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

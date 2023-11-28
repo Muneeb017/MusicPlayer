@@ -25,7 +25,7 @@ class FavouriteActivity : AppCompatActivity() {
 
         binding = ActivityFavouriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = "Favourites"
+        supportActionBar?.hide()
 
         favouriteSongs = checkPlaylist(favouriteSongs)
 

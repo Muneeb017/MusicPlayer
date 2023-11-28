@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:animateLayoutChanges="true"
+    android:fitsSystemWindows="true"
     tools:context="com.muneeb.musicplayer.ui.activitys.MainActivity"
     tools:openDrawer="start">
 
@@ -78,26 +78,35 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/tvTotalSongs"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/total_songs"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <TextView
+                    android:id="@+id/tvTotalSongs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/total_songs"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvSongs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:scrollbarThumbVertical="@drawable/scroll_bar_icon"
                 android:scrollbars="vertical"
                 tools:itemCount="2"
-                tools:listitem="@layout/item_music" />
+                tools:listitem="@layout/item_music_main" />
 
         </LinearLayout>
 

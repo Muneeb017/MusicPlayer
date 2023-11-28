@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.muneeb.musicPlayer.R
 import com.muneeb.musicPlayer.databinding.FragmentNowPlayingBinding
+import com.muneeb.musicplayer.adapters.MusicMainAdapter
 import com.muneeb.musicplayer.data.setSongPosition
 import com.muneeb.musicplayer.ui.activitys.MainActivity
 import com.muneeb.musicplayer.ui.activitys.PlayerActivity
@@ -30,9 +31,11 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         val view = inflater.inflate(R.layout.fragment_now_playing, container, false)
         binding = FragmentNowPlayingBinding.bind(view)
         binding.root.visibility = View.INVISIBLE
+
         binding.playPauseBtnNp.setOnClickListener {
             if (PlayerActivity.isPlaying) pauseMusic() else playMusic()
         }
+
         binding.nextBtnNp.setOnClickListener {
             setSongPosition(increment = true)
             PlayerActivity.musicService!!.createMediaPlayer()
@@ -65,6 +68,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
             binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
             if (PlayerActivity.isPlaying) binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)
             else binding.playPauseBtnNp.setIconResource(R.drawable.ic_play)
+
         }
     }
 

@@ -33,7 +33,7 @@ class PlaylistActivity : AppCompatActivity() {
 
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.title = "Playlists"
+        supportActionBar?.hide()
 
         binding.rcvPlaylist.setHasFixedSize(true)
         binding.rcvPlaylist.setItemViewCacheSize(15)
