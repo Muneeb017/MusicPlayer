@@ -63,7 +63,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
             binding.songsNameNP.isSelected = true
             Glide.with(requireContext())
                 .load(PlayerActivity.musicListPA[PlayerActivity.songPosition].artUri)
-                .apply(RequestOptions().placeholder(R.drawable.ic_music_player).centerCrop())
+                .apply(RequestOptions().placeholder(R.drawable.music).centerCrop())
                 .into(binding.songImgNP)
             binding.songsNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
             if (PlayerActivity.isPlaying) binding.playPauseBtnNp.setIconResource(R.drawable.ic_pause)

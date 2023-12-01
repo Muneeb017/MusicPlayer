@@ -63,7 +63,7 @@ class PlaylistAdapter(private val context: Context, private var playlistList: Ar
         if (PlaylistActivity.musicPlaylist.ref[position].playlist.size > 0) {
             Glide.with(context)
                 .load(PlaylistActivity.musicPlaylist.ref[position].playlist[0].artUri)
-                .apply(RequestOptions().placeholder(R.drawable.ic_music_player).centerCrop())
+                .apply(RequestOptions().placeholder(R.drawable.music).centerCrop())
                 .into(holder.image)
         }
 

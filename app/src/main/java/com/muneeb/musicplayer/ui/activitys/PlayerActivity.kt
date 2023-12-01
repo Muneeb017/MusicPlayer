@@ -79,7 +79,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             musicListPA.add(getMusicDetails(intent.data!!))
             Glide.with(this)
                 .load(getImgArt(musicListPA[songPosition].path))
-                .apply(RequestOptions().placeholder(R.color.black).centerCrop())
+                .apply(RequestOptions().placeholder(R.drawable.music).centerCrop())
                 .into(binding.ivSongs)
             binding.tvSongsName.text = musicListPA[songPosition].title
         } else initializeLayout()
@@ -248,7 +248,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun setLayout() {
         fIndex = favouriteChecker(musicListPA[songPosition].id)
         Glide.with(this).load(musicListPA[songPosition].artUri)
-            .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(binding.ivSongs)
+            .apply(RequestOptions().placeholder(R.drawable.music).centerCrop()).into(binding.ivSongs)
         binding.tvSongsName.text = musicListPA[songPosition].title
 
 //        if (repeat) binding.ivRepeat.setColorFilter(

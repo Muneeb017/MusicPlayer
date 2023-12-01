@@ -40,7 +40,7 @@ class MusicMainAdapter(
             tvFolderName.text = model.album
             tvDurationSong.text = formatDuration(model.duration)
             Glide.with(context).load(model.artUri)
-                .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(ivSongs)
+                .apply(RequestOptions().placeholder(R.drawable.music).centerCrop()).into(ivSongs)
 
             when{
                 playlistDetails -> {

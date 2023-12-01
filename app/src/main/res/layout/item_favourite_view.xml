@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     app:cardCornerRadius="15dp"
-    app:cardElevation="3dp">
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
             android:id="@+id/songImgFV"
             android:layout_width="80dp"
             android:layout_height="75dp"
-            android:src="@color/black"
+            android:src="@drawable/music"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="80dp"
     android:animateLayoutChanges="true"
     android:background="@drawable/bg_sheet"
     tools:context="com.muneeb.musicplayer.ui.fragments.NowPlayingFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/songImgNP"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_margin="15dp"
-        android:src="@color/black"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/music"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

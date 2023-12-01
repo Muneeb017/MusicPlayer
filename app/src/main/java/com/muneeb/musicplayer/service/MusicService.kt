@@ -80,7 +80,7 @@ class MusicService : Service(), AudioManager.OnAudioFocusChangeListener {
         val image = if (imageArt != null) {
             BitmapFactory.decodeByteArray(imageArt, 0, imageArt.size)
         } else {
-            BitmapFactory.decodeResource(resources, R.drawable.splash_icon)
+            BitmapFactory.decodeResource(resources, R.drawable.music)
         }
 
         val notification = NotificationCompat.Builder(baseContext, ApplicationClass.CHANNEL_ID)

@@ -46,7 +46,7 @@ class MusicAdapter(
         holder.duration.text = formatDuration(musicList[position].duration)
 
         Glide.with(context).load(musicList[position].artUri)
-            .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(holder.image)
+            .apply(RequestOptions().placeholder(R.drawable.music).centerCrop()).into(holder.image)
 
         when{
             playlistDetails -> {

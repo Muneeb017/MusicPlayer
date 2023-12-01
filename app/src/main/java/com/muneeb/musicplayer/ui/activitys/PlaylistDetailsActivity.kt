@@ -89,7 +89,7 @@ class PlaylistDetailsActivity : AppCompatActivity() {
         if (musicAdapter.itemCount > 0) {
             Glide.with(this)
                 .load(PlaylistActivity.musicPlaylist.ref[currentPlaylistPos].playlist[0].artUri)
-                .apply(RequestOptions().placeholder(R.color.black).centerCrop())
+                .apply(RequestOptions().placeholder(R.drawable.music).centerCrop())
                 .into(binding.playlistImg)
 
             binding.btnShuffle.show()

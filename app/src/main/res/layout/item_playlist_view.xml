@@ -4,9 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    app:cardCornerRadius="15dp"
-    app:strokeColor="@color/black"
-    app:strokeWidth="3dp">
+    app:cardElevation="10dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,8 +15,8 @@
             android:id="@+id/playlistImage"
             android:layout_width="170dp"
             android:layout_height="150dp"
-            android:src="@color/black"
-            android:scaleType="centerCrop"
+            android:src="@drawable/music"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

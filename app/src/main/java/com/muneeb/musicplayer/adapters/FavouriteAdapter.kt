@@ -29,7 +29,7 @@ class FavouriteAdapter(private val context: Context, private var musicList: Arra
         holder.name.text = musicList[position].title
 
         Glide.with(context).load(musicList[position].artUri)
-            .apply(RequestOptions().placeholder(R.color.black).centerCrop()).into(holder.image)
+            .apply(RequestOptions().placeholder(R.drawable.music).centerCrop()).into(holder.image)
 
         holder.root.setOnClickListener {
             val intent = Intent(context, PlayerActivity::class.java)
