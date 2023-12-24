@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayoutNav"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
+    android:layout_height="240dp"
     android:layout_marginTop="80dp"
     android:animateLayoutChanges="true"
     android:background="@color/cool_blue"
@@ -23,10 +23,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/apple_icon_music_round"
+        android:src="@mipmap/ic_music_apple_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
